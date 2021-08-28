@@ -1,4 +1,4 @@
-package ua.goit.notificationsapp;
+package ua.goit.goitnotes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
