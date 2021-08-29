@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Note</title>
+    <script src="https://ajax.googleapis.com.ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Title:</h1>
+<input name="title" type="text" minlength="5" maxlength="100">
+<p>
+<h1>Note:</h1>
+<p><textarea name="note" cols="150" rows="20" minlength="5" maxlength="10000"></textarea></p>
+<div><input type="radio" id="private" name="status" value="private" checked>
+    <label for="private">private</label>
+    <input type="radio" id="public" name="status" value="public">
+    <label for="public">public</label>
+</div>
+<button type="button" name="submit">Submit</button>
+</body>
+</html>
