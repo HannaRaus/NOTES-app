@@ -1,20 +1,17 @@
 CREATE TABLE users
 (
-    user_id BINARY(16) PRIMARY KEY,
-    user_name varchar(255) UNIQUE NOT NULL,
-    user_password varchar(255) NOT NULL,
-    first_name varchar(255),
-    last_name varchar(255),
-    user_status varchar(50) NOT NULL
+    id       BINARY(16) PRIMARY KEY,
+    name     varchar(100) UNIQUE NOT NULL,
+    password varchar(200)        NOT NULL,
+    role     varchar(100)         NOT NULL
 );
 
-CREATE TABLE notifications
+CREATE TABLE notes
 (
-    notification_id BINARY(16) PRIMARY KEY,
-    title varchar(100) UNIQUE NOT NULL,
-    description varchar(10000) NOT NULL,
-    access_type ENUM ('public','private'),
-    user_name VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (user_name)
-        REFERENCES users(user_name)
+    id          BINARY(16) PRIMARY KEY,
+    title       varchar(200) UNIQUE NOT NULL,
+    content     varchar(10100)      NOT NULL,
+    access_type varchar(100) NOT NULL,
+    user_id     BINARY(16) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
