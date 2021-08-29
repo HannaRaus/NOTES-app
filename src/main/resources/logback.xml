@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="HOME_LOG" value="\\logs\\NotesAppLog.log"/>
+    <property name="HOME_LOG" value="logs\\GoITNotesAppLog.log"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="ua/goit/project" level="debug" additivity="false">
+    <logger name="ua/goit/goitnotes" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>
