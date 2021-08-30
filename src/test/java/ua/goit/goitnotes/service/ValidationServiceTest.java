@@ -85,6 +85,32 @@ class ValidationServiceTest {
     }
 
     @Test
+    void validateNote_WrongAccessType() {
+        ValidateNoteRequest noteRequest = new ValidateNoteRequest("Title", "Content", AccessType.byName("Something"));
+        ValidateNoteRequest noteRequestEmpty = new ValidateNoteRequest("Title", "Content", AccessType.byName(""));
+        ValidateResponse response = validationService.validateNote(noteRequest);
+        ValidateResponse responseEmpty = validationService.validateNote(noteRequestEmpty);
+        assertEquals(1, response.getErrors().size());
+        assertEquals(ValidationError.WRONG_ACCESS_TYPE, response.getErrors().get(0));
+        assertFalse(response.isSuccess());
+        assertEquals(1, responseEmpty.getErrors().size());
+        assertEquals(ValidationError.WRONG_ACCESS_TYPE, responseEmpty.getErrors().get(0));
+        assertFalse(response.isSuccess());
+    }
+
+    @Test
+    void validateNote_RightAccessType() {
+        ValidateNoteRequest noteRequest = new ValidateNoteRequest("Title", "Content", AccessType.byName("PRIVATE"));
+        ValidateNoteRequest noteRequestCaseInsensitive = new ValidateNoteRequest("Title", "Content", AccessType.byName("PuBlic"));
+        ValidateResponse response = validationService.validateNote(noteRequest);
+        ValidateResponse responseCaseInsensitive = validationService.validateNote(noteRequestCaseInsensitive);
+        assertEquals(0, response.getErrors().size());
+        assertTrue(response.isSuccess());
+        assertEquals(0, responseCaseInsensitive.getErrors().size());
+        assertTrue(response.isSuccess());
+    }
+
+    @Test
     void validateUser_NoErrors() {
         ValidateUserRequest validateUserRequest = new ValidateUserRequest("User1", "password");
         ValidateResponse response = validationService.validateUser(validateUserRequest);
