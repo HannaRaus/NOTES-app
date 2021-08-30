@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service(value = "userServiceDetails")
 public class GoITNotesUserDetailsService implements UserDetailsService {
-    private final Repository<User> userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public GoITNotesUserDetailsService(UserRepository userRepository) {
@@ -16,8 +16,8 @@ public class GoITNotesUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User user = userRepository.findByName(username).orElseThrow(() ->
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        final User user = userRepository.findByName(userName).orElseThrow(() ->
                 new UsernameNotFoundException(String.format("user with username %s not exists", username)));
         return new UserPrincipal(user);
     }

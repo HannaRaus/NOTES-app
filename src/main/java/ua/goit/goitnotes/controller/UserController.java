@@ -14,7 +14,7 @@ import ua.goit.goitnotes.exception.UserAlreadyExistException;
 @RequestMapping(path = "/user")
 public class UserController {
 
-    private Service<User> userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String register(@ModelAttribute("userForm") @Valid User user, BindingResult result, Model model) {
+    public String register(@ModelAttribute("userForm") User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "registration";
         }
