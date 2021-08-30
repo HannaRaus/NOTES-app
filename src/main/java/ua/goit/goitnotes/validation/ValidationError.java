@@ -1,0 +1,11 @@
+package ua.goit.goitnotes.validation;
+
+public enum ValidationError {
+    WRONG_NOTE_TITLE_LENGTH,
+    WRONG_NOTE_CONTENT_LENGTH,
+    NOTE_ACCESS_TYPE_IS_NOT_CHOSEN,
+    WRONG_USER_NAME_LENGTH,
+    WRONG_USER_NAME_SYMBOLS,
+    WRONG_ACCESS_TYPE,
+    WRONG_USER_PASSWORD_LENGTH
+}

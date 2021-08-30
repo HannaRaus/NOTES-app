@@ -10,4 +10,12 @@ public class CustomTestConfiguration {
     public MarkdownConverterCommonMarkdownImplementation markdownConverterCommonMarkdownImplementation(){
     return new MarkdownConverterCommonMarkdownImplementation();
 }
+import ua.goit.goitnotes.service.ValidationService;
+
+@TestConfiguration
+public class CustomTestConfiguration {
+    @Bean
+    public ValidationService validationService(){
+        return new ValidationService();
+    }
 }
