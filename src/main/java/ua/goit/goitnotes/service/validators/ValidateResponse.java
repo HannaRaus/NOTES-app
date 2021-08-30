@@ -13,6 +13,6 @@ public class ValidateResponse {
 
     private boolean success;
 
-    private List<Errors> errors;
+    private List<ValidationErrors> errors;
 
 }
