@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.markdownConverter;
+package ua.goit.goitnotes.service.processors;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -7,14 +7,13 @@ import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.exeptions.DataNotAvailableException;
 
 @Service
-public class MarkdownConverterCommonMarkdownImplementation implements MarkDownConverter {
+public class MarkdownProcessorCommonMarkdownImplementation implements MarkdownProcessor {
     @Override
-    public String convert(String markdownText) {
+    public String getHTML(String markdownText) {
         if (markdownText == null) throw new DataNotAvailableException("note is null");
         Parser parser = Parser.builder().build();
-        Node Note = parser.parse(markdownText);
+        Node note = parser.parse(markdownText);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String resultNote = renderer.render(Note);
-        return resultNote;
+        return renderer.render(note);
     }
 }

@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.markdownConverterTests;
+package ua.goit.goitnotes.service.markdownProcessorTests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,17 +7,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ua.goit.goitnotes.config.CustomTestConfiguration;
 import ua.goit.goitnotes.exeptions.DataNotAvailableException;
-import ua.goit.goitnotes.markdownConverter.MarkdownConverterCommonMarkdownImplementation;
+import ua.goit.goitnotes.service.processors.MarkdownProcessorCommonMarkdownImplementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CustomTestConfiguration.class)
-public class MarkdownConverterCommonMarkdownImplementationTest {
+public class MarkdownProcessorCommonMarkdownImplementationTest {
 
     @Autowired
-    private MarkdownConverterCommonMarkdownImplementation markdownConverter;
+    private MarkdownProcessorCommonMarkdownImplementation markdownConverter;
 
     @Test
     void testMarkdownConverterCommonMarkdownImplementationShouldConvertCorrectly() {
@@ -37,7 +37,7 @@ public class MarkdownConverterCommonMarkdownImplementationTest {
 
                 and some **bold** and _italic_ text""";
         //when
-        String conversionResult = markdownConverter.convert(note);
+        String conversionResult = markdownConverter.getHTML(note);
         //then
         assertThat(conversionResult).isEqualTo("""
                 <h1>Header 1</h1>
@@ -56,6 +56,6 @@ public class MarkdownConverterCommonMarkdownImplementationTest {
         String note = null;
         //when
         //then
-        assertThrows(DataNotAvailableException.class, () -> markdownConverter.convert(note));
+        assertThrows(DataNotAvailableException.class, () -> markdownConverter.getHTML(note));
     }
 }
