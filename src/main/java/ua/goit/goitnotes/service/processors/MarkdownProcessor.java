@@ -4,6 +4,4 @@ public interface MarkdownProcessor {
 
     String getHTML(String markdown);
 
-    String getMarkdown(String html);
-
 }
