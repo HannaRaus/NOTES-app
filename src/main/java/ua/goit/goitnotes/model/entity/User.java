@@ -9,27 +9,19 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
-    @Getter
-    @Setter
     @Column(name = "name")
     private String name;
-    @Getter
-    @Setter
     @Column(name = "password")
     private String password;
-    @Getter
-    @Setter
     @OneToOne(mappedBy = "users")
     private UserRole userRole;
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "users")
     private Set<NoteDAO> notes;
 

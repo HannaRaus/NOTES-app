@@ -5,32 +5,29 @@ import lombok.Setter;
 import ua.goit.goitnotes.model.entity.Enums.AccessType;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "notes")
+@Getter
+@Setter
 public class NoteDAO {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
-    @Getter
-    @Setter
+
     @Column(name = "title")
     private String title;
-    @Getter
-    @Setter
+
     @Column(name = "content")
     private String content;
-    @Getter
-    @Setter
+
     @Column(name = "access_type")
     private AccessType accessType;
-    @Getter
-    @Setter
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -43,5 +40,18 @@ public class NoteDAO {
     }
 
     public NoteDAO() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NoteDAO)) return false;
+        NoteDAO noteDAO = (NoteDAO) o;
+        return id.equals(noteDAO.id) && title.equals(noteDAO.title) && content.equals(noteDAO.content) && accessType == noteDAO.accessType && user.equals(noteDAO.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, content, accessType);
     }
 }

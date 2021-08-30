@@ -8,20 +8,16 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "role")
+@Getter
+@Setter
 public class UserRole {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
-    @Getter
-    @Setter
     @Column(name = "name")
     private String name;
-    @Getter
-    @Setter
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
