@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping(path = "/")
 @Slf4j
 public class MainController {
 
@@ -31,7 +33,7 @@ public class MainController {
         if (logout != null) {
             model.addAttribute("message", "You have been logged out");
         }
-
+        log.info("I'm rendering the \"login\" page");
         return "login";
     }
 
