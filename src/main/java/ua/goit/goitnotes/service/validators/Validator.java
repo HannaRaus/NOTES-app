@@ -1,7 +1,7 @@
 package ua.goit.goitnotes.service.validators;
 
-public interface Validator<T> {
+public interface Validator {
 
-    boolean validate(T entity);
+    ValidateResponse validate(String json);
 
 }
