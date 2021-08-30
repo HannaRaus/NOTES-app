@@ -15,4 +15,6 @@ public interface Service<T> {
 
     T findById(UUID id);
 
+    T findByName(String name);
+
 }
