@@ -6,4 +6,5 @@ import ua.goit.goitnotes.model.entity.NoteDAO;
 import java.util.UUID;
 
 public interface NoteRepository extends JpaRepository<NoteDAO, UUID> {
+    NoteDAO findByTitle(String title);
 }

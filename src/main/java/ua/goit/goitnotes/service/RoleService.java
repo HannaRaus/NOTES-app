@@ -1,14 +1,15 @@
 package ua.goit.goitnotes.service;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import ua.goit.goitnotes.exception.ObjectNotFoundException;
 import ua.goit.goitnotes.model.entity.UserRole;
 import ua.goit.goitnotes.model.repository.RoleRepository;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
-public class RoleService implements ServiceInterface<UserRole> {
+public class RoleService implements Service<UserRole> {
 
     private final RoleRepository roleRepository;
 
@@ -21,7 +22,7 @@ public class RoleService implements ServiceInterface<UserRole> {
         if (role.isPresent()) {
             return role.get();
         } else {
-            throw new UsernameNotFoundException("Role with specified name not found");
+            throw new ObjectNotFoundException("Object 'role' with specified name not found");
         }
     }
 
@@ -31,27 +32,27 @@ public class RoleService implements ServiceInterface<UserRole> {
         if (role.isPresent()) {
             return role.get();
         } else {
-            throw new UsernameNotFoundException("Role with specified ID not found");
+            throw new ObjectNotFoundException("Object 'role' with specified ID not found");
         }
     }
 
     @Override
-    public List<UserRole> findAll() {
-        return roleRepository.findAll();
+    public Set<UserRole> findAll() {
+        return new HashSet<>(roleRepository.findAll());
     }
 
     @Override
-    public void create(UserRole entity) {
-        roleRepository.save(entity);
+    public UserRole create(UserRole entity) {
+        return roleRepository.save(entity);
     }
 
     @Override
-    public void update(UserRole entity) {
-        roleRepository.save(entity);
+    public UserRole update(UserRole entity) {
+        return roleRepository.save(entity);
     }
 
     @Override
-    public void delete(UserRole entity) {
-        roleRepository.delete(entity);
+    public void delete(UUID id) {
+        roleRepository.deleteById(id);
     }
 }

@@ -2,7 +2,7 @@ package ua.goit.goitnotes.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import ua.goit.goitnotes.model.entity.Enums.AccessType;
+import ua.goit.goitnotes.enums.AccessType;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -45,8 +45,7 @@ public class NoteDAO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NoteDAO)) return false;
-        NoteDAO noteDAO = (NoteDAO) o;
+        if (!(o instanceof NoteDAO noteDAO)) return false;
         return id.equals(noteDAO.id) && title.equals(noteDAO.title) && content.equals(noteDAO.content) && accessType == noteDAO.accessType && user.equals(noteDAO.user);
     }
 

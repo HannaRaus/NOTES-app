@@ -1,17 +1,18 @@
 package ua.goit.goitnotes.service;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ua.goit.goitnotes.exception.ObjectNotFoundException;
 import ua.goit.goitnotes.exception.UserAlreadyExistException;
 import ua.goit.goitnotes.model.entity.User;
 import ua.goit.goitnotes.model.repository.RoleRepository;
 import ua.goit.goitnotes.model.repository.UserRepository;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
-public class UserService implements ServiceInterface<User>{
+public class UserService implements Service<User>{
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -38,7 +39,7 @@ public class UserService implements ServiceInterface<User>{
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new UsernameNotFoundException("User with specified name not found");
+            throw new ObjectNotFoundException("Object 'user' with specified name not found");
         }
     }
 
@@ -48,27 +49,27 @@ public class UserService implements ServiceInterface<User>{
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new UsernameNotFoundException("User with specified ID not found");
+            throw new ObjectNotFoundException("Object 'user' with specified ID not found");
         }
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Set<User> findAll() {
+        return new HashSet<>(userRepository.findAll());
     }
 
     @Override
-    public void create(User user) {
-        userRepository.save(user);
+    public User create(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public void update(User user) {
-        userRepository.save(user);
+    public User update(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public void delete(User user) {
-        userRepository.delete(user);
+    public void delete(UUID id) {
+        userRepository.deleteById(id);
     }
 }
