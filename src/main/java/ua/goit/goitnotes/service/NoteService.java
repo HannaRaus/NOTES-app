@@ -33,8 +33,13 @@ public class NoteService implements Service<NoteDTO> {
     }
 
     @Override
-    public NoteDTO findByName(String name) {
-        return noteConverter.toDTO(noteRepository.findByTitle(name));
+    public NoteDTO findByName(String title) {
+        Optional<NoteDAO> note = noteRepository.findByTitle(title);
+        if (note.isPresent()) {
+            return noteConverter.toDTO(note.get());
+        } else {
+            throw new ObjectNotFoundException("object 'note' with specified name not found");
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,14 +20,12 @@ public class UserRole {
     private UUID id;
     @Column(name = "name")
     private String name;
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @OneToMany(mappedBy = "userRole")
+    private Set<User> users;
 
-    public UserRole(UUID id, String name, User user) {
+    public UserRole(UUID id, String name) {
         this.id = id;
         this.name = name;
-        this.user = user;
     }
 
 }

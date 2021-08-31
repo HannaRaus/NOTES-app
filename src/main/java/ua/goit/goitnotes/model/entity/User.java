@@ -22,7 +22,8 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
-    @OneToOne(mappedBy = "user")
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
     private UserRole userRole;
     @OneToMany(mappedBy = "user")
     private Set<NoteDAO> notes;

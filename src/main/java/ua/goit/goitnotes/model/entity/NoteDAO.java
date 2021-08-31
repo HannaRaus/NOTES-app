@@ -15,22 +15,17 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class NoteDAO {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
-
     @Column(name = "title")
     private String title;
-
     @Column(name = "content")
     private String content;
-
     @Column(name = "access_type")
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
