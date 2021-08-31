@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.exception;
+package ua.goit.goitnotes.exeptions;
 
 public class UserAlreadyExistException extends RuntimeException {
     public UserAlreadyExistException(String message) {

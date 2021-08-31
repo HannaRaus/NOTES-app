@@ -21,6 +21,7 @@ public class MainController {
 
     @PostMapping
     public String doPost() {
+        log.info("I'm rendering the \"index\" page");
         return "index";
     }
 

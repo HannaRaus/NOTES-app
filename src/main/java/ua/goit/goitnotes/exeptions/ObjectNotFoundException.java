@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.exception;
+package ua.goit.goitnotes.exeptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     public ObjectNotFoundException(String message) {

@@ -12,6 +12,7 @@ import java.util.Collections;
 
 @Component
 public class UserPrincipal implements UserDetails {
+
     private final User user;
 
     @Autowired
