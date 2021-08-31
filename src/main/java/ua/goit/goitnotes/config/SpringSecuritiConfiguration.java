@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.goit.goitnotes.authorization.GoITNotesUserDetailsService;
+import ua.goit.goitnotes.model.entity.User;
 
 public class SpringSecuritiConfiguration extends WebSecurityConfigurerAdapter {
 

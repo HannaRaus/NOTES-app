@@ -1,6 +1,7 @@
 package ua.goit.goitnotes.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Table(name = "role")
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +29,4 @@ public class UserRole {
         this.user = user;
     }
 
-    public UserRole() {
-    }
 }
