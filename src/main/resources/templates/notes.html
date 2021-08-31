@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--Import head with styles and script-->
+<head th:replace="fragments :: head"></head>
+<body>
+<!--Import navigation bar-->
+<div th:replace="fragments :: navibar"></div>
+<div th:switch="${notes}">
+    <h2 th:case="null">No notes yet!</h2>
+    <div th:case="*">
+        <h2>My notes - ${notes.size()}
+            <a href="/note/create">
+                <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
+            </a>
+        </h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col" colspan="3"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="note : ${notes}">
+                <td scope="row" th:text="${note.name}"></td>
+                <td th:text="${note.description}"></td>
+                <td align="center">
+                    <a th:href="@{/edit/{id}(id=${note.id})}">
+                        <button class="btn btn-outline-info my-2 my-sm-0">Edit</button>
+                    </a>
+                </td>
+                <td align="center">
+                    <a th:href="@{/delete/{id}(id=${note.id})}">
+                        <button class="btn btn-outline-danger my-2 my-sm-0">Delete</button>
+                    </a>
+                </td>
+                <td align="center">
+                    <a>
+                        <button class="btn btn-outline-info my-2 my-sm-0"
+                                onclick="copyAction('/note/share/${note.id}')">Copy link
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+        function copyAction(text) {
+          navigator.clipboard.writeText(text);
+        }
+
+
+</script>
+</body>
+</html>
