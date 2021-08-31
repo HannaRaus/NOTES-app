@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GoITNotesApplication {
 
 	public static void main(String[] args) {
-
+		log.info("The GoIT Notes application is running");
 		SpringApplication.run(GoITNotesApplication.class, args);
 
 	}

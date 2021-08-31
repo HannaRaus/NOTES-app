@@ -1,6 +1,7 @@
 package ua.goit.goitnotes.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.goit.goitnotes.enums.AccessType;
 
@@ -12,7 +13,9 @@ import java.util.UUID;
 @Table(name = "notes")
 @Getter
 @Setter
+@NoArgsConstructor
 public class NoteDAO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -25,6 +28,7 @@ public class NoteDAO {
     private String content;
 
     @Column(name = "access_type")
+    @Enumerated(EnumType.STRING)
     private AccessType accessType;
 
     @ManyToOne
@@ -37,9 +41,6 @@ public class NoteDAO {
         this.content = content;
         this.accessType = accessType;
         this.user = user;
-    }
-
-    public NoteDAO() {
     }
 
     @Override

@@ -1,8 +1,8 @@
 package ua.goit.goitnotes.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.goit.goitnotes.exception.ObjectNotFoundException;
-import ua.goit.goitnotes.exception.UserAlreadyExistException;
+import ua.goit.goitnotes.exeptions.ObjectNotFoundException;
+import ua.goit.goitnotes.exeptions.UserAlreadyExistException;
 import ua.goit.goitnotes.model.entity.User;
 import ua.goit.goitnotes.model.repository.RoleRepository;
 import ua.goit.goitnotes.model.repository.UserRepository;
