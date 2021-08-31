@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+@org.springframework.stereotype.Service
 public class UserService implements Service<User>{
 
     private final UserRepository userRepository;

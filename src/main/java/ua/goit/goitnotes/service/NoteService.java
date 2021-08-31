@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@org.springframework.stereotype.Service
 public class NoteService implements Service<NoteDTO> {
 
     private final NoteRepository noteRepository;
