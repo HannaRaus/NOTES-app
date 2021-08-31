@@ -20,9 +20,9 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "user")
     private UserRole userRole;
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<NoteDAO> notes;
 
     public User(UUID id, String name, String password, UserRole userRole, Set<NoteDAO> notes) {
