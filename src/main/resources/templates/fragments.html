@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--Head-->
 <head th:fragment="head">
     <title>GOIT NOTES</title>
@@ -22,8 +22,6 @@
             crossorigin="anonymous">
     </script>
 
-    <!--Additional modal windows Bootstrap plugin-->
-    <script src="/js/bootbox.all.min.js"></script>
 </head>
 <body>
 <!--Navigation bar-->
@@ -32,11 +30,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="${pageContext.request.contextPath}/note/list">Notes</a>
+                    <a class="nav-link active" href="/note/list">Notes</a>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto"></ul>
-            <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/logout">
+            <form class="form-inline my-2 my-lg-0" action="/logout">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Logout</button>
             </form>
         </div>
