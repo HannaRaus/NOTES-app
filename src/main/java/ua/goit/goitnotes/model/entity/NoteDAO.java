@@ -17,7 +17,7 @@ import java.util.UUID;
 public class NoteDAO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
@@ -28,6 +28,7 @@ public class NoteDAO {
     private String content;
 
     @Column(name = "access_type")
+    @Enumerated(EnumType.STRING)
     private AccessType accessType;
 
     @ManyToOne

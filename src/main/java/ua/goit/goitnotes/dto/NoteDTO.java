@@ -1,12 +1,14 @@
 package ua.goit.goitnotes.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class NoteDTO {
     private UUID id;
     private String title;
@@ -20,8 +22,5 @@ public class NoteDTO {
         this.content = content;
         this.accessType = accessType;
         this.userName = userName;
-    }
-
-    public NoteDTO() {
     }
 }
