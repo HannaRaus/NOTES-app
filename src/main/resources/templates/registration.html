@@ -5,30 +5,31 @@
     <title>Registration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link th:href="@{/static/stile.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
     <div class="login-register-form">
-    <form method="POST" modelAttribute="userForm" class="form-signin" action="/user/registration">
-        <h2 class="form-signin-heading">Create your account</h2>
+
+        <form th:action="@{/user/registration}" method="post" class="form-signin">
+            <h2 class="form-signin-heading">Create your account</h2>
             <div th:form="${error != null ? 'has-error' : ''}" class="form-group">
-                <label for="userName" class="form-label mt-4">Username</label>
-                <input type="text" class="form-control" id="userName" aria-describedby="emailHelp"
-                       placeholder="Enter username">
+                <label for="username" class="form-label mt-4">Username</label>
+                <input type="text" name="name" class="form-control" id="username"
+                       placeholder="Enter username contains only latin symbols">
             </div>
 
-        <div th:form="${error != null ? 'has-error' : ''}" class="form-group" >
-            <label for="password" class="form-label mt-4">Password</label>
-            <input type="text" class="form-control" id="password" aria-describedby="emailHelp"
-                   placeholder="Enter password">
-        </div>
+            <div th:form="${error != null ? 'has-error' : ''}" class="form-group">
+                <label for="password" class="form-label mt-4">Password</label>
+                <input type="text" name="password" class="form-control" id="password"
+                       placeholder="Enter password">
+            </div>
 
-        <div class="d-grid gap-2">
-            <button class="btn btn-lg btn-primary" type="submit">SIGN UP</button>
-        </div>
-
-    </form>
+            <div class="d-grid gap-2">
+                <button class="btn btn-lg btn-primary" type="submit">SIGN UP</button>
+            </div>
+            <h5 class="text-center"><a href="/login">Return to Login page</a>
+            </h5>
+        </form>
     </div>
 </div>
 </body>
