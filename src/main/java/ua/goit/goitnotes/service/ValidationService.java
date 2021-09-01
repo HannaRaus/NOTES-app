@@ -3,7 +3,6 @@ package ua.goit.goitnotes.service;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.enums.AccessType;
 import ua.goit.goitnotes.validation.ValidateNoteRequest;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidateUserRequest;
@@ -24,7 +23,7 @@ public class ValidationService {
         boolean success = true;
         String title = noteRequest.getTitle();
         String content = noteRequest.getContent();
-        AccessType accessType = noteRequest.getAccessType();
+//        AccessType accessType = noteRequest.getAccessType();
         if (title.length() < 5 || title.length() > 100) {
             errors.add(ValidationError.WRONG_NOTE_TITLE_LENGTH);
             log.error("validateNote . note title:'{}' length should be between 5 and 100 included", title);
@@ -33,14 +32,14 @@ public class ValidationService {
             errors.add(ValidationError.WRONG_NOTE_CONTENT_LENGTH);
             log.error("validateNote . note content length:'{}', but should be between 5 and 10000 included", content.length());
         }
-        if (accessType == null) {
-            errors.add(ValidationError.NOTE_ACCESS_TYPE_IS_NOT_CHOSEN);
-            log.error("validateNote . validation type is not chosen:'{}'", accessType);
-        }
-        if(accessType == AccessType.UNKNOWN){
-            errors.add(ValidationError.WRONG_ACCESS_TYPE);
-            log.error("validateNote . validation type is wrong:'{}'", accessType);
-        }
+//        if (accessType == null) {
+//            errors.add(ValidationError.NOTE_ACCESS_TYPE_IS_NOT_CHOSEN);
+//            log.error("validateNote . validation type is not chosen:'{}'", accessType);
+//        }
+//        if(accessType == AccessType.UNKNOWN){
+//            errors.add(ValidationError.WRONG_ACCESS_TYPE);
+//            log.error("validateNote . validation type is wrong:'{}'", accessType);
+//        }
         if(errors.size() > 0){
             success = false;
             log.error("validateNote . note data is incorrect:'{}'", noteRequest);
