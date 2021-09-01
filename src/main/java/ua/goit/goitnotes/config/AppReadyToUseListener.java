@@ -12,6 +12,9 @@ import ua.goit.goitnotes.model.entity.UserRole;
 import ua.goit.goitnotes.service.RoleService;
 import ua.goit.goitnotes.service.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Component
 public class AppReadyToUseListener {
@@ -46,13 +49,20 @@ public class AppReadyToUseListener {
     }
 
     private void addDefaultRoles() {
-        UserRole admin = new UserRole();
-        admin.setName("ROLE_ADMIN");
-        roleService.create(admin);
 
-        UserRole user = new UserRole();
-        user.setName("ROLE_USER");
-        roleService.create(user);
+        List<String> userRols = new ArrayList<>() {
+            {
+                add("ROLE_ADMIN");
+                add("ROLE_USER");
+            }
+        };
+
+        userRols.forEach((r) -> {
+            UserRole user = new UserRole();
+            user.setName(r);
+            roleService.create(user);
+        });
+
     }
 
     private void addAdminUser() {

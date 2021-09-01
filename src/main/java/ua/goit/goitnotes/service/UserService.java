@@ -30,7 +30,9 @@ public class UserService implements Service<User>{
             throw new UserAlreadyExistException(
                     String.format("User with specified email already exist %s", user.getName()));
         }
-        user.setUserRole(roleRepository.findByName("ROLE_USER").get());
+        if(roleRepository.findByName("ROLE_USER").isPresent()) {
+            user.setUserRole(roleRepository.findByName("ROLE_USER").get());
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -61,7 +63,13 @@ public class UserService implements Service<User>{
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+
+        if (userRepository.findByName(user.getName()).isPresent()) {
+            throw new UserAlreadyExistException(
+                    String.format("User with specified email already exist %s", user.getName()));
+        }
+        register(user);
+        return userRepository.findByName(user.getName()).get();
     }
 
     @Override
