@@ -25,7 +25,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class NoteDAO {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -35,17 +34,13 @@ public class NoteDAO {
     @Type(type = "uuid-char")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-
     @Column(name = "title")
     private String title;
-
     @Column(name = "content")
     private String content;
-
     @Column(name = "access_type")
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
