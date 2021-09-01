@@ -38,4 +38,9 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping(path = "error")
+    public String error(Model model, String error) {
+        model.addAttribute("error", error);
+        return "error";
+    }
 }
