@@ -27,6 +27,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Access</th>
                 <th class="col-sm-2" scope="col" colspan="3"></th>
             </tr>
             </thead>
@@ -34,6 +35,7 @@
             <tr th:each="note : ${notes}">
                 <td scope="row" th:text="${note.title}"></td>
                 <td th:text="${note.content}"></td>
+                <td th:text="${note.accessType}"></td>
                 <td align="center">
                     <a th:href="@{/edit/{id}(id=${note.id})}">
                         <button class="btn btn-outline-success my-2 my-sm-0">Edit</button>
@@ -59,48 +61,10 @@
 </div>
 
 <!-- Modal window with warning for delete operation-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Attention</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Note will be deleted, are you sure you want to proceed?</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-danger" href="#">Delete anyway</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="fragments :: modalDelete"></div>
 
-<script>
-<!-- script for copying url button --!>
-function copyURI(evt) {
-    evt.preventDefault();
-    navigator.clipboard.writeText(evt.target.getAttribute('href'));
-}
-
-<!-- script for sending id in modal "Delete anyway" button --!>
-$('#deleteModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var noteId = button.data('note-id') // Extract info from data-* attributes
-  var noteName = button.data('note-name')
-
-  var href = '/note/delete?id=' + noteId // link forming
-
-  var modal = $(this)
-  modal.find('.modal-body p').text('Are you sure you want to delete note with title - ' + noteName + '?')
-  $('.btn-danger', this).attr('href', href)
-})
-
-
-
-
-</script>
+<!-- scripts -->
+<script src="/js/copyFunction.js"></script>
+<script src="/js/modal.js"></script>
 </body>
 </html>
