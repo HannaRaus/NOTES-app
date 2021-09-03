@@ -3,6 +3,7 @@ package ua.goit.goitnotes.service;
 import ua.goit.goitnotes.dto.NoteDTO;
 import ua.goit.goitnotes.exeptions.ObjectNotFoundException;
 import ua.goit.goitnotes.model.entity.NoteDAO;
+import ua.goit.goitnotes.model.entity.User;
 import ua.goit.goitnotes.model.repository.NoteRepository;
 import ua.goit.goitnotes.service.convertors.NoteConverter;
 
@@ -33,13 +34,9 @@ public class NoteService implements Service<NoteDTO> {
     }
 
     @Override
-    public NoteDTO findByName(String title) {
-        Optional<NoteDAO> note = noteRepository.findByTitle(title);
-        if (note.isPresent()) {
-            return noteConverter.toDTO(note.get());
-        } else {
-            throw new ObjectNotFoundException("object 'note' with specified name not found");
-        }
+    public NoteDTO findByName(String name) {
+        return noteConverter.toDTO(noteRepository.findByTitle(name).
+                orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found")));
     }
 
     @Override
@@ -64,5 +61,13 @@ public class NoteService implements Service<NoteDTO> {
     @Override
     public void delete(UUID id) {
         noteRepository.deleteById(id);
+    }
+
+    public boolean isTitlePresetForTheUser(String title, User user) {
+        Optional<NoteDAO> note = noteRepository.findByTitle(title);
+        if(note.isPresent()){
+           return user.equals(note.get().getUser());
+        }
+        return false;
     }
 }

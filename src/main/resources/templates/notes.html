@@ -5,10 +5,19 @@
 <body>
 <!--Import navigation bar-->
 <div th:replace="fragments :: navibar"></div>
-<div th:switch="${notes}">
-    <h2 th:case="null">No notes yet!</h2>
-    <div th:case="*">
-        <h2>My notes - ${notes.size()}
+<!--Set variable notes.size()-->
+<div th:with="listSize=${#lists.size(notes)}">
+    <!--In case the list is empty-->
+    <div th:if="${listSize <= 0}">
+        <h2>No notes yet
+            <a href="/note/create">
+                <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
+            </a>
+        </h2>
+    </div>
+    <!--Unless the list is empty/ Rendering content-->
+    <div th:unless="${listSize <= 0}">
+        <h2>My notes - <span th:text="${listSize}"></span>
             <a href="/note/create">
                 <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
             </a>
@@ -18,27 +27,30 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th scope="col" colspan="3"></th>
+                <th scope="col">Access</th>
+                <th class="col-sm-2" scope="col" colspan="3"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="note : ${notes}">
-                <td scope="row" th:text="${note.name}"></td>
-                <td th:text="${note.description}"></td>
+                <td scope="row" th:text="${note.title}"></td>
+                <td th:text="${note.content}"></td>
+                <td th:text="${note.accessType}"></td>
                 <td align="center">
                     <a th:href="@{/edit/{id}(id=${note.id})}">
-                        <button class="btn btn-outline-info my-2 my-sm-0">Edit</button>
+                        <button class="btn btn-outline-success my-2 my-sm-0">Edit</button>
                     </a>
                 </td>
                 <td align="center">
-                    <a th:href="@{/delete/{id}(id=${note.id})}">
-                        <button class="btn btn-outline-danger my-2 my-sm-0">Delete</button>
-                    </a>
+                    <button type="button" class="btn btn-outline-danger my-2 my-sm-0" data-toggle="modal"
+                            data-target="#deleteModal"
+                            th:data-note-id="${note.id}" th:data-note-name="${note.title}">Delete
+                    </button>
                 </td>
                 <td align="center">
                     <a>
-                        <button class="btn btn-outline-info my-2 my-sm-0"
-                                onclick="copyAction('/note/share/${note.id}')">Copy link
+                        <button class="btn btn-outline-info my-2 my-sm-0" th:href="@{/note/share/{id}(id=${note.id})}"
+                                onclick="copyURI(event)">Copy link
                         </button>
                     </a>
                 </td>
@@ -48,12 +60,11 @@
     </div>
 </div>
 
-<script>
-        function copyAction(text) {
-          navigator.clipboard.writeText(text);
-        }
+<!-- Modal window with warning for delete operation-->
+<div th:replace="fragments :: modalDelete"></div>
 
-
-</script>
+<!-- scripts -->
+<script src="/js/copyFunction.js"></script>
+<script src="/js/modal.js"></script>
 </body>
 </html>
