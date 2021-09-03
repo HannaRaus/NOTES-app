@@ -26,7 +26,7 @@ public class UserService implements Service<User>{
     }
 
     public void register(User user) {
-        if (userRepository.findByName(user.getName()).isPresent()) {
+        if (isUserNamePresent(user.getName())) {
             throw new UserAlreadyExistException(
                     String.format("User with specified email already exist %s", user.getName()));
         }
@@ -81,4 +81,9 @@ public class UserService implements Service<User>{
     public void delete(UUID id) {
         userRepository.deleteById(id);
     }
+
+    public boolean isUserNamePresent(String name) {
+        return userRepository.findByName(name).isPresent();
+    }
+
 }

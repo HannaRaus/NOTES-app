@@ -1,5 +1,13 @@
 package ua.goit.goitnotes;
 
+import ua.goit.goitnotes.model.entity.NoteDAO;
+import ua.goit.goitnotes.model.entity.User;
+import ua.goit.goitnotes.model.entity.UserRole;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 public class TestUtils {
 
     public static String get101CharString(){
@@ -8,6 +16,12 @@ public class TestUtils {
 
     public static String get51CharString(){
         return "Lorem3ipsum5dolor6sit1amet2consectetuer5adipiscing3";
+    }
+
+    public static User getCurrentUser(){
+        Set<NoteDAO> notes = new HashSet<>();
+        return new User(UUID.randomUUID(), "UserName", "password",
+                new UserRole(UUID.randomUUID(), "ROLE_USER"),notes);
     }
 
     public static String get10001CharString() {
