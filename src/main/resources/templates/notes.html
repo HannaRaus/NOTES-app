@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!--Import head with styles and script-->
-<head th:replace="fragments :: head"></head>
+<head th:include="fragments :: head">
+    <title id="pageTitle">My notes</title>
+</head>
 <body>
 <!--Import navigation bar-->
 <div th:replace="fragments :: navibar"></div>
