@@ -13,7 +13,9 @@ import ua.goit.goitnotes.validation.*;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -33,7 +35,7 @@ class ValidationServiceTest {
 
     private String stringId = "1162d158-0bf0-11ec-9a03-0242ac130003";
     private UUID randomId = UUID.fromString(stringId);
-   
+
     @Test
     void validateNote_NoErrors() {
         when(noteService.isTitlePresetForTheUser(anyString(), any())).thenReturn(false);

@@ -1,13 +1,12 @@
 package ua.goit.goitnotes.validation;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.note.model.AccessType;
-import ua.goit.goitnotes.note.service.NoteService;
 import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.note.service.NoteService;
 import ua.goit.goitnotes.user.service.UserService;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.regex.Pattern;
 @Slf4j
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class ValidationService {
 
     UserService userService;

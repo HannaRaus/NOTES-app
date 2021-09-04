@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.service.UserService;
+import ua.goit.goitnotes.validation.ValidationService;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidateUserRequest;
-import ua.goit.goitnotes.validation.ValidationService;
 
 @Controller
 @RequestMapping(path = "/user")

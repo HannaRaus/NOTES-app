@@ -1,9 +1,9 @@
 package ua.goit.goitnotes.user.service;
 
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.interfaces.Service;
 import ua.goit.goitnotes.user.model.UserRole;
 import ua.goit.goitnotes.user.repository.RoleRepository;
+import ua.goit.goitnotes.interfaces.Service;
 
 import java.util.HashSet;
 import java.util.Optional;

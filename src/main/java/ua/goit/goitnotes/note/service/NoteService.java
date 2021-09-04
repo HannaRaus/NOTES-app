@@ -1,5 +1,12 @@
 package ua.goit.goitnotes.note.service;
 
+import ua.goit.goitnotes.interfaces.Service;
+import ua.goit.goitnotes.note.dto.NoteDTO;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import ua.goit.goitnotes.note.model.NoteDAO;
+import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.note.repository.NoteRepository;
+import ua.goit.goitnotes.note.service.convertors.NoteConverter;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.Service;
 import ua.goit.goitnotes.note.dto.NoteDTO;
