@@ -9,6 +9,7 @@ import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.note.repository.NoteRepository;
 import ua.goit.goitnotes.note.service.convertors.NoteConverter;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -71,5 +72,16 @@ public class NoteService implements CrudService<NoteDTO> {
            return user.equals(note.get().getUser());
         }
         return false;
+    }
+
+    public Set<NoteDTO> findByUserName(String userName) {
+        Set<NoteDTO> notes = new HashSet<>();
+
+        noteRepository.findByUser_Name(userName)
+                .forEach(note -> {
+                    note.ifPresent(noteDAO -> notes.add(noteConverter.toDTO(noteDAO)));
+                });
+
+        return notes;
     }
 }

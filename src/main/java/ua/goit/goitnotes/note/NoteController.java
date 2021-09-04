@@ -2,6 +2,7 @@ package ua.goit.goitnotes.note;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,8 @@ public class NoteController {
     @GetMapping(path = "/list")
     public String showNotes(Model model) {
         log.info("NoteController.showNotes()");
-        Set<NoteDTO> notes = noteService.findAll();
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Set<NoteDTO> notes = noteService.findByUserName(currentPrincipalName);
         model.addAttribute("notes", notes);
         return "notes";
     }
