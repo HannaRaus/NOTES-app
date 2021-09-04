@@ -1,6 +1,7 @@
 package ua.goit.goitnotes.note.service;
 
-import ua.goit.goitnotes.interfaces.Service;
+import org.springframework.stereotype.Service;
+import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.note.model.NoteDAO;
@@ -13,8 +14,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Service
-public class NoteService implements Service<NoteDTO> {
+@Service
+public class NoteService implements CrudService<NoteDTO> {
 
     private final NoteRepository noteRepository;
     private final NoteConverter noteConverter;
