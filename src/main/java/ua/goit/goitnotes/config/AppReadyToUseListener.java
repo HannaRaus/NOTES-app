@@ -1,63 +1,47 @@
 package ua.goit.goitnotes.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import ua.goit.goitnotes.exeptions.ObjectNotFoundException;
-import ua.goit.goitnotes.model.entity.User;
-import ua.goit.goitnotes.model.entity.UserRole;
-import ua.goit.goitnotes.service.RoleService;
-import ua.goit.goitnotes.service.UserService;
+import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.user.model.UserRole;
+import ua.goit.goitnotes.user.service.RoleService;
+import ua.goit.goitnotes.user.service.UserService;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AppReadyToUseListener {
+
+    private final UserService userService;
+    private final RoleService roleService;
+
     @Value("${default.admin.name}")
     private String defaultAdminName;
 
     @Value("${default.admin.password}")
     private String defaultAdminPassword;
 
-
-    private final UserService userService;
-    private final RoleService roleService;
-
-    @Autowired
-    public AppReadyToUseListener(UserService userService, RoleService roleService) {
-        this.userService = userService;
-        this.roleService = roleService;
-    }
-
     @EventListener(ApplicationReadyEvent.class)
     public void appReady() {
-
-        try {
-            userService.findByName("admin");
-        } catch (ObjectNotFoundException e) {
-            log.info(e.getMessage());
-        }finally {
-            addDefaultRoles();
-            addAdminUser();
+        if (userService.findByName(defaultAdminName).getName() != null) {
+            return;
         }
-
+        addDefaultRoles();
+        addAdminUser();
     }
 
     private void addDefaultRoles() {
 
-        List<String> userRols = new ArrayList<>() {
-            {
-                add("ROLE_ADMIN");
-                add("ROLE_USER");
-            }
-        };
+        List<String> userRoles = Arrays.asList("ROLE_ADMIN", "ROLE_USER");
 
-        userRols.forEach((r) -> {
+        userRoles.forEach((r) -> {
             UserRole user = new UserRole();
             user.setName(r);
             roleService.create(user);

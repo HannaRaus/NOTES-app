@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script data-main="src/" src="./node_modules/bcrypt/bcrypt.js"></script>
+    <script src="/static/js/sendToValidateUser.js"></script>
 </head>
 <body>
 <div class="container">
@@ -12,20 +16,22 @@
 
         <form th:action="@{/user/registration}" method="post" class="form-signin">
             <h2 class="form-signin-heading">Create your account</h2>
-            <div th:form="${error != null ? 'has-error' : ''}" class="form-group">
+            <div th:form="${errors != null ? 'has-error' : ''}" class="form-group">
                 <label for="username" class="form-label mt-4">Username</label>
                 <input type="text" name="name" class="form-control" id="username"
                        placeholder="Enter username contains only latin symbols">
             </div>
 
-            <div th:form="${error != null ? 'has-error' : ''}" class="form-group">
+            <div th:form="${errors != null ? 'has-error' : ''}" class="form-group">
                 <label for="password" class="form-label mt-4">Password</label>
                 <input type="text" name="password" class="form-control" id="password"
                        placeholder="Enter password">
             </div>
-
-            <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-primary" type="submit">SIGN UP</button>
+            <p class="result" style="color:red"></p>
+            <div class="form-label mt-4">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-lg btn-primary" type="submit">SIGN UP</button>
+                </div>
             </div>
             <h5 class="text-center"><a href="/login">Return to Login page</a>
             </h5>
