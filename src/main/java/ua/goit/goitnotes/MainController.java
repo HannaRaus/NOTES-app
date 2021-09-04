@@ -21,11 +21,9 @@ public class MainController {
     private final NoteService noteService;
 
     @GetMapping
-    public String doGet(Model model) {
+    public String doGet() {
         log.info("NoteController.showNotes() I'm rendering the \"notes\" page");
-        Set<NoteDTO> notes = noteService.findAll();
-        model.addAttribute("notes", notes);
-        return "notes";
+        return "redirect:/note/list";
     }
 
     @GetMapping("login")

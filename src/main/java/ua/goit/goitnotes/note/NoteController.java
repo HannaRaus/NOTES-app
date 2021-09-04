@@ -1,7 +1,7 @@
 package ua.goit.goitnotes.note;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +15,12 @@ import java.util.UUID;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(path = "/note")
 public class NoteController {
 
     private final ValidationService validationService;
     private final NoteService noteService;
-
-    @Autowired
-    public NoteController(ValidationService validationService, NoteService noteService) {
-        this.validationService = validationService;
-        this.noteService = noteService;
-    }
 
     @GetMapping(path = "/list")
     public String showNotes(Model model) {
