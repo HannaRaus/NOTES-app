@@ -1,15 +1,17 @@
 package ua.goit.goitnotes.note.service.convertors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.goit.goitnotes.interfaces.Convertor;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.AccessType;
-import ua.goit.goitnotes.note.model.NoteDAO;
+import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.user.service.UserService;
 
+@Slf4j
 @Component
-public class NoteConverter implements Convertor<NoteDAO, NoteDTO> {
+public class NoteConverter implements Convertor<Note, NoteDTO> {
 
     private final UserService userService;
 
@@ -19,14 +21,16 @@ public class NoteConverter implements Convertor<NoteDAO, NoteDTO> {
     }
 
     @Override
-    public NoteDAO fromDTO(NoteDTO noteDTO) {
-        return new NoteDAO(noteDTO.getId(), noteDTO.getTitle(), noteDTO.getContent(),
+    public Note fromDTO(NoteDTO noteDTO) {
+        log.info("fromDTO .");
+        return new Note(noteDTO.getId(), noteDTO.getTitle(), noteDTO.getContent(),
                 AccessType.byName(noteDTO.getAccessType()), userService.findByName(noteDTO.getUserName()));
     }
 
     @Override
-    public NoteDTO toDTO(NoteDAO noteDAO) {
-        return new NoteDTO(noteDAO.getId(), noteDAO.getTitle(), noteDAO.getContent(),
-                noteDAO.getAccessType().name(), noteDAO.getUser().getName());
+    public NoteDTO toDTO(Note note) {
+        log.info("toDTO .");
+        return new NoteDTO(note.getId(), note.getTitle(), note.getContent(),
+                note.getAccessType().name(), note.getUser().getName());
     }
 }
