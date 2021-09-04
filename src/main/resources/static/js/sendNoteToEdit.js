@@ -1,4 +1,3 @@
-<script>
         function sendNoteToCreate(){
             const WRONG_TITLE_LENGTH = "title mast be at least 5 symbols, up to 100 symbols";
             const WRONG_NOTE_LENGTH = "note must be at least 5 symbols, up to 10000 symbols";
@@ -9,11 +8,12 @@
             contentErrorField.innerHTML = null;
             let accessTypeErrorField = document.querySelector('.accessTypeErrorField');
             accessTypeErrorField.innerHTML = null;
+            let uuid = document.querySelector('#uuid')
             let title = document.querySelector('#title');
             let text = document.querySelector('#note');
             let accessType = document.querySelector('input[name="accessType"]:checked');
             let request = new XMLHttpRequest();
-            let url = "http://localhost:9999/note/create";
+            let url = "/note/create";
             request.open("POST", url, true);
             request.setRequestHeader("Content-Type", "application/json");
             request.responseType='json'
@@ -21,7 +21,7 @@
                  if (request.readyState === 4 && request.status === 200) {
                     var operationStatus = request.response;
                     if (operationStatus.success===true){
-                        window.location.href = '/index';
+                        window.location.href = '/';
                     } else{
                         operationStatus.errors.forEach(function(error) {
                             switch (error){
@@ -41,6 +41,7 @@
                             })
                  }}
             };
-            var data = JSON.stringify({ "title": title.value, "content": text.value, "accessType": accessType.value });
+            var data = JSON.stringify({ "title": title.value, "content": text.value, "accessType": accessType.value
+             , "idString": uuid.value});
             request.send(data);
         }

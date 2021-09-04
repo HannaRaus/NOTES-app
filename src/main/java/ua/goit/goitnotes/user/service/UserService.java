@@ -3,10 +3,10 @@ package ua.goit.goitnotes.user.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
+import ua.goit.goitnotes.interfaces.Service;
 import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.repository.RoleRepository;
 import ua.goit.goitnotes.user.repository.UserRepository;
-import ua.goit.goitnotes.interfaces.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,12 +18,11 @@ public class UserService implements Service<User> {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.encoder = encoder;
     }
 
     @Override

@@ -1,10 +1,10 @@
 function sendToValidateAndCreateUser() {
 
     const bcrypt = require('bcrypt')
-    let password = document.querySelector("#password");
+    let password = document.querySelector(".password");
     let result = document.querySelector('.result');
     result.innerHTML = "in work";
-    let name = document.querySelector('#name');
+    let name = document.querySelector('.name');
     let passwordHash = bcrypt.hashSync(password, 10);
     console.log(passwordHash);
     let request = new XMLHttpRequest();
@@ -18,7 +18,7 @@ function sendToValidateAndCreateUser() {
     request.responseType = 'json'
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            const operationStatus = request.response;
+            var operationStatus = request.response;
             result.innerHTML = operationStatus;
             if (operationStatus.success === true) {
                 window.location.href = '/login';
