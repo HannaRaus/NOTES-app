@@ -1,47 +1,44 @@
 package ua.goit.goitnotes.note.service;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.Service;
 import ua.goit.goitnotes.note.dto.NoteDTO;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.note.model.NoteDAO;
-import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.note.repository.NoteRepository;
 import ua.goit.goitnotes.note.service.convertors.NoteConverter;
+import ua.goit.goitnotes.user.model.User;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @org.springframework.stereotype.Service
+@AllArgsConstructor
 public class NoteService implements Service<NoteDTO> {
 
     private final NoteRepository noteRepository;
     private final NoteConverter noteConverter;
 
-    public NoteService(NoteRepository noteRepository, NoteConverter noteConverter) {
-        this.noteRepository = noteRepository;
-        this.noteConverter = noteConverter;
-    }
-
     @Override
     public NoteDTO findById(UUID uuid) {
-        Optional<NoteDAO> note = noteRepository.findById(uuid);
-        if (note.isPresent()) {
-            return noteConverter.toDTO(note.get());
-        } else {
-            throw new ObjectNotFoundException("object 'note' with specified ID not found");
-        }
+        log.info("findById .");
+        return noteRepository.findById(uuid).map(noteConverter::toDTO)
+                .orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found"));
     }
 
     @Override
     public NoteDTO findByName(String name) {
-        return noteConverter.toDTO(noteRepository.findByTitle(name).
-                orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found")));
+        log.info("findByName .");
+        return noteRepository.findByTitle(name).map(noteConverter::toDTO)
+                .orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found"));
     }
 
     @Override
     public Set<NoteDTO> findAll() {
+        log.info("findAll .");
         return noteRepository.findAll().stream()
                 .map(noteConverter::toDTO)
                 .collect(Collectors.toSet());
@@ -49,26 +46,32 @@ public class NoteService implements Service<NoteDTO> {
 
     @Override
     public NoteDTO create(NoteDTO entity) {
-        NoteDAO note = noteConverter.fromDTO(entity);
+        log.info("create .");
+        Note note = noteConverter.fromDTO(entity);
         return noteConverter.toDTO(noteRepository.save(note));
     }
 
     @Override
     public NoteDTO update(NoteDTO entity) {
-        NoteDAO note = noteConverter.fromDTO(entity);
+        log.info("update .");
+        Note note = noteConverter.fromDTO(entity);
         return noteConverter.toDTO(noteRepository.save(note));
     }
 
     @Override
     public void delete(UUID id) {
-        noteRepository.deleteById(id);
+        log.info("delete .");
+        try {
+            noteRepository.deleteById(id);
+        }catch (IllegalArgumentException e){
+            log.error("delete . There are no notes with such id in database");
+            throw new ObjectNotFoundException("There are no notes with such id in database");
+        }
     }
 
     public boolean isTitlePresetForTheUser(String title, User user) {
-        Optional<NoteDAO> note = noteRepository.findByTitle(title);
-        if(note.isPresent()){
-           return user.equals(note.get().getUser());
-        }
-        return false;
+        log.info("isTitlePresetForTheUser .");
+        return noteRepository.findByTitle(title)
+                .filter(noteDAO -> user.equals(noteDAO.getUser())).isPresent();
     }
 }

@@ -9,7 +9,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ua.goit.goitnotes.TestUtils;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.user.service.UserService;
-import ua.goit.goitnotes.validation.*;
+import ua.goit.goitnotes.validation.ValidateNoteRequest;
+import ua.goit.goitnotes.validation.ValidateResponse;
+import ua.goit.goitnotes.validation.ValidateUserRequest;
+import ua.goit.goitnotes.validation.ValidationError;
+import ua.goit.goitnotes.validation.ValidationService;
 
 import java.util.UUID;
 
@@ -55,7 +59,7 @@ class ValidationServiceTest {
         ValidateNoteRequest noteRequestShort = new ValidateNoteRequest("Tit", "Content", "PRIVATE", stringId);
         ValidateNoteRequest noteRequestEmpty = new ValidateNoteRequest("", "Content", "PRIVATE", stringId);
         ValidateNoteRequest noteRequestLong = new ValidateNoteRequest
-                (TestUtils.get101CharString(),
+                (TestUtils.getString(101),
                         "Content", "PRIVATE", stringId);
         ValidateResponse responseShort = validationService.validateNote(noteRequestShort, TestUtils.getCurrentUser());
         ValidateResponse responseLong = validationService.validateNote(noteRequestLong, TestUtils.getCurrentUser());
@@ -77,7 +81,7 @@ class ValidationServiceTest {
         ValidateNoteRequest noteRequestEmpty = new ValidateNoteRequest("Title", "", "PRIVATE", stringId);
         ValidateNoteRequest noteRequestShort = new ValidateNoteRequest("Title", "Cont", "PRIVATE", stringId);
         ValidateNoteRequest noteRequestLong = new ValidateNoteRequest
-                ("Title", TestUtils.get10001CharString(), "PRIVATE", stringId);
+                ("Title", TestUtils.getString(10001), "PRIVATE", stringId);
         ValidateResponse responseShort = validationService.validateNote(noteRequestShort, TestUtils.getCurrentUser());
         ValidateResponse responseLong = validationService.validateNote(noteRequestLong, TestUtils.getCurrentUser());
         ValidateResponse responseEmpty = validationService.validateNote(noteRequestEmpty, TestUtils.getCurrentUser());
@@ -165,7 +169,7 @@ class ValidationServiceTest {
     void validateUser_WrongNameLength() {
         when(userService.isUserNamePresent(anyString())).thenReturn(false);
         ValidateUserRequest validateUserRequestShort = new ValidateUserRequest("User", "password");
-        ValidateUserRequest validateUserRequestLong = new ValidateUserRequest(TestUtils.get51CharString(), "password");
+        ValidateUserRequest validateUserRequestLong = new ValidateUserRequest(TestUtils.getString(51), "password");
         ValidateResponse responseShort = validationService.validateUser(validateUserRequestShort);
         ValidateResponse responseLong = validationService.validateUser(validateUserRequestLong);
         assertEquals(1, responseShort.getErrors().size());
@@ -181,7 +185,7 @@ class ValidationServiceTest {
         when(userService.isUserNamePresent(anyString())).thenReturn(false);
         ValidateUserRequest validateUserRequestShort = new ValidateUserRequest("User5", "pass");
         ValidateUserRequest validateUserRequestEmpty = new ValidateUserRequest("User5", "");
-        ValidateUserRequest validateUserRequestLong = new ValidateUserRequest("User5", TestUtils.get101CharString());
+        ValidateUserRequest validateUserRequestLong = new ValidateUserRequest("User5", TestUtils.getString(101));
         ValidateResponse responseShort = validationService.validateUser(validateUserRequestShort);
         ValidateResponse responseLong = validationService.validateUser(validateUserRequestLong);
         ValidateResponse responseEmpty = validationService.validateUser(validateUserRequestEmpty);
