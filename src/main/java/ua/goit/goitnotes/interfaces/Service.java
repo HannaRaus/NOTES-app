@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.service;
+package ua.goit.goitnotes.interfaces;
 
 import java.util.Set;
 import java.util.UUID;

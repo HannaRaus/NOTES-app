@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.service.convertors;
+package ua.goit.goitnotes.interfaces;
 
 import java.util.HashSet;
 import java.util.Objects;

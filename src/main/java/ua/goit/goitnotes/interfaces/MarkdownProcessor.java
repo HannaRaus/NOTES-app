@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.service.processors;
+package ua.goit.goitnotes.interfaces;
 
 public interface MarkdownProcessor {
 

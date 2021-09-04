@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+<h1>Error</h1>
+<table class="table table-hover">
+    <tr class="table-warning">
+        <td scope="col">Date</td>
+        <td th:text="${timestamp}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Path</td>
+        <td th:text="${path}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Error</td>
+        <td th:text="${error}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Status</td>
+        <td th:text="${status}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Message</td>
+        <td th:text="${message}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Exception</td>
+        <td th:text="${exception}"/>
+    </tr>
+    <tr class="table-warning">
+        <td>Trace</td>
+        <td>
+            <pre th:text="${trace}"/>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

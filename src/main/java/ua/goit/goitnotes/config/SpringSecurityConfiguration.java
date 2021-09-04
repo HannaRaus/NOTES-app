@@ -1,5 +1,6 @@
 package ua.goit.goitnotes.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,38 +11,32 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.goit.goitnotes.authorization.GoITNotesUserDetailsService;
-import ua.goit.goitnotes.model.entity.User;
+import ua.goit.goitnotes.user.authorization.GoITNotesUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SpringSecuritiConfiguration extends WebSecurityConfigurerAdapter {
+@AllArgsConstructor
+public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final GoITNotesUserDetailsService userDetailsService;
-
-    @Autowired
-    public SpringSecuritiConfiguration(GoITNotesUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
 
     @Bean(name = "passwordEncoder")
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
-    @Bean
+/*    @Bean
     public User user() {
         return new User();
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/registration", "/view/css/**", "/note", "/note/**").permitAll()
+                .antMatchers("/user/registration", "/css/*.css").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
