@@ -1,8 +1,8 @@
 package ua.goit.goitnotes;
 
-import ua.goit.goitnotes.model.entity.NoteDAO;
-import ua.goit.goitnotes.model.entity.User;
-import ua.goit.goitnotes.model.entity.UserRole;
+import ua.goit.goitnotes.note.model.NoteDAO;
+import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.user.model.UserRole;
 
 import java.util.HashSet;
 import java.util.Set;

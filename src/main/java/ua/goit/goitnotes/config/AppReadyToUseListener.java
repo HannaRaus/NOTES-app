@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import ua.goit.goitnotes.model.entity.User;
-import ua.goit.goitnotes.model.entity.UserRole;
-import ua.goit.goitnotes.service.RoleService;
-import ua.goit.goitnotes.service.UserService;
+import ua.goit.goitnotes.user.model.User;
+import ua.goit.goitnotes.user.model.UserRole;
+import ua.goit.goitnotes.user.service.RoleService;
+import ua.goit.goitnotes.user.service.UserService;
 
 import java.util.Arrays;
 import java.util.List;
