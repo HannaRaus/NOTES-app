@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Note</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-</head>
-<body>
-<h1>Title:</h1>
-<p class="titleErrorField" style="color:red"></p>
-<input id="title" name="title" type="text" minlength="5" maxlength="100">
-<p>
-<h1>Note:</h1>
-<p class="contentErrorField" style="color:red"></p>
-<p><textarea id="note" name="note" cols="150" rows="20" minlength="5" maxlength="10000"></textarea></p>
-<div>
-    <p class="accessTypeErrorField" style="color:red"></p>
-    <input type="radio" id="private" name="accessType" value="private" checked>
-    <label for="private">private</label>
-    <input type="radio" id="public" name="accessType" value="public">
-    <label for="public">public</label>
-</div>
-<button type="button" onclick="sendNoteToCreate()">Submit</button>
-
-</body>
 <script>
         function sendNoteToCreate(){
             const WRONG_TITLE_LENGTH = "title mast be at least 5 symbols, up to 100 symbols";
@@ -46,7 +21,7 @@
                  if (request.readyState === 4 && request.status === 200) {
                     var operationStatus = request.response;
                     if (operationStatus.success===true){
-                        window.location.href = '/';
+                        window.location.href = '/index';
                     } else{
                         operationStatus.errors.forEach(function(error) {
                             switch (error){
@@ -69,6 +44,3 @@
             var data = JSON.stringify({ "title": title.value, "content": text.value, "accessType": accessType.value });
             request.send(data);
         }
-
-</script>
-</html>
