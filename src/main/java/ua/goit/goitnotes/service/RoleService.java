@@ -1,6 +1,6 @@
 package ua.goit.goitnotes.service;
 
-import ua.goit.goitnotes.exeptions.ObjectNotFoundException;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.model.entity.UserRole;
 import ua.goit.goitnotes.model.repository.RoleRepository;
 

@@ -1,6 +1,6 @@
 package ua.goit.goitnotes.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.model.entity.User;
@@ -11,16 +11,11 @@ import ua.goit.goitnotes.validation.ValidateUserRequest;
 
 @Controller
 @RequestMapping(path = "/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
     private final ValidationService validationService;
-
-    @Autowired
-    public UserController(UserService userService, ValidationService validationService) {
-        this.userService = userService;
-        this.validationService = validationService;
-    }
 
     @GetMapping("/registration")
     public String showRegistrationPage() {
@@ -29,21 +24,23 @@ public class UserController {
 
     @PostMapping("/registration")
     @ResponseBody
-    public ValidateResponse register(ValidateUserRequest userRequest) {
-
+    public ValidateResponse registerAndValidate(ValidateUserRequest userRequest) {
         ValidateResponse response = validationService.validateUser(userRequest);
-        if (response.isSuccess()) {
-            User user = new User();
-            user.setName(userRequest.getName());
-            user.setPassword(userRequest.getPassword());
-            userService.register(user);
-        }
-
+        register(userRequest, response);
         return response;
     }
 
     @ModelAttribute("userForm")
     public User defaultUser() {
         return new User();
+    }
+
+    private void register(ValidateUserRequest userRequest, ValidateResponse response) {
+        if (response.isSuccess()) {
+            User user = new User();
+            user.setName(userRequest.getName());
+            user.setPassword(userRequest.getPassword());
+            userService.create(user);
+        }
     }
 }

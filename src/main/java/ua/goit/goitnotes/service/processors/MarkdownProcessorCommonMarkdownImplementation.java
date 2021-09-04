@@ -4,7 +4,7 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.exeptions.DataNotAvailableException;
+import ua.goit.goitnotes.exceptions.DataNotAvailableException;
 
 @Service
 public class MarkdownProcessorCommonMarkdownImplementation implements MarkdownProcessor {

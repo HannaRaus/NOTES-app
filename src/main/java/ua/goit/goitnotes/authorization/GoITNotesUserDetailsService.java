@@ -1,6 +1,6 @@
 package ua.goit.goitnotes.authorization;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,13 +9,9 @@ import ua.goit.goitnotes.model.entity.User;
 import ua.goit.goitnotes.model.repository.UserRepository;
 
 @Service(value = "userServiceDetails")
+@RequiredArgsConstructor
 public class GoITNotesUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public GoITNotesUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

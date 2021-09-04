@@ -1,28 +1,31 @@
 package ua.goit.goitnotes.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.goit.goitnotes.dto.NoteDTO;
+import ua.goit.goitnotes.service.NoteService;
+
+import java.util.Set;
 
 
 @Controller
 @RequestMapping(path = "/")
+@RequiredArgsConstructor
 @Slf4j
 public class MainController {
 
-    @GetMapping
-    public String doGet() {
-        log.info("I'm rendering the \"index\" page");
-        return "index";
-    }
+    private final NoteService noteService;
 
-    @PostMapping
-    public String doPost() {
-        log.info("I'm rendering the \"index\" page");
-        return "index";
+    @GetMapping
+    public String doGet(Model model) {
+        log.info("NoteController.showNotes() I'm rendering the \"notes\" page");
+        Set<NoteDTO> notes = noteService.findAll();
+        model.addAttribute("notes", notes);
+        return "notes";
     }
 
     @GetMapping("login")

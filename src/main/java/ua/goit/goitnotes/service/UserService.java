@@ -1,8 +1,8 @@
 package ua.goit.goitnotes.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ua.goit.goitnotes.exeptions.ObjectNotFoundException;
-import ua.goit.goitnotes.exeptions.UserAlreadyExistException;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
 import ua.goit.goitnotes.model.entity.User;
 import ua.goit.goitnotes.model.repository.RoleRepository;
 import ua.goit.goitnotes.model.repository.UserRepository;
@@ -25,25 +25,10 @@ public class UserService implements Service<User>{
         this.encoder = encoder;
     }
 
-    public void register(User user) {
-        if (isUserNamePresent(user.getName())) {
-            throw new UserAlreadyExistException(
-                    String.format("User with specified email already exist %s", user.getName()));
-        }
-        if(roleRepository.findByName("ROLE_USER").isPresent()) {
-            user.setUserRole(roleRepository.findByName("ROLE_USER").get());
-        }
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
+    @Override
     public User findByName(String name) {
-        Optional<User> user = userRepository.findByName(name);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new ObjectNotFoundException("Object 'user' with specified name not found");
-        }
+        return userRepository.findByName(name).orElse(new User());
+
     }
 
     @Override
@@ -63,18 +48,14 @@ public class UserService implements Service<User>{
 
     @Override
     public User create(User user) {
-
-        if (userRepository.findByName(user.getName()).isPresent()) {
-            throw new UserAlreadyExistException(
-                    String.format("User with specified email already exist %s", user.getName()));
-        }
-        register(user);
-        return userRepository.findByName(user.getName()).get();
+        User userForCreate = prepareUser(user);
+        return userRepository.save(userForCreate);
     }
 
     @Override
     public User update(User user) {
-        return userRepository.save(user);
+        User userForUpdate = prepareUser(user);
+        return userRepository.save(userForUpdate);
     }
 
     @Override
@@ -84,6 +65,18 @@ public class UserService implements Service<User>{
 
     public boolean isUserNamePresent(String name) {
         return userRepository.findByName(name).isPresent();
+    }
+
+    private User prepareUser(User user) {
+        if (isUserNamePresent(user.getName())) {
+            throw new UserAlreadyExistException(
+                    String.format("User with specified email already exist %s", user.getName()));
+        }
+        if(roleRepository.findByName("ROLE_USER").isPresent()) {
+            user.setUserRole(roleRepository.findByName("ROLE_USER").get());
+        }
+        user.setPassword(encoder.encode(user.getPassword()));
+        return user;
     }
 
 }
