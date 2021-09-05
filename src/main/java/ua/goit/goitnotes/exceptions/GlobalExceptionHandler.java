@@ -42,12 +42,6 @@ public class GlobalExceptionHandler {
         return getResponseEntity(request, e.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    /*@ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException
-            (Exception e, WebRequest request) {
-        return getResponseEntity(request, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
-
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<Object> handleThrowable
             (Throwable e, WebRequest request) {
