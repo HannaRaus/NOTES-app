@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.goit.goitnotes.interfaces.Validate;
 import ua.goit.goitnotes.note.model.AccessType;
 import ua.goit.goitnotes.note.service.NoteService;
 import ua.goit.goitnotes.user.model.User;
@@ -22,20 +23,21 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValidationService {
+
+public class ValidationService implements Validate {
     @Autowired
     UserService userService;
     @Autowired
     NoteService noteService;
 
+    @Override
     public ValidateResponse validateNote(@NonNull ValidateNoteRequest noteRequest, User currentUser) {
         log.info("validateNote .");
         List<ValidationError> errors = new ArrayList<>();
-        boolean success = true;
         String title = noteRequest.getTitle();
         String content = noteRequest.getContent();
         String noteIdString = noteRequest.getIdString();
-        AccessType accessType = AccessType.byName(noteRequest.getAccessType());
+       String accessType = noteRequest.getAccessType();
         if(noteService.isTitlePresetForTheUser(title, currentUser)){
             if(Objects.isNull(noteIdString) || !noteService.findByName(title).getId().equals(UUID.fromString(noteIdString))){
                 errors.add(ValidationError.NOTE_TITLE_NOT_UNIQUE_FOR_CURRENT_USER);
@@ -50,20 +52,16 @@ public class ValidationService {
             errors.add(ValidationError.WRONG_NOTE_CONTENT_LENGTH);
             log.error("validateNote . note content length:'{}', but should be between 5 and 10000 included", content.length());
         }
-        if(accessType == AccessType.UNKNOWN){
+        if(!AccessType.isAccessType(accessType)){
             errors.add(ValidationError.WRONG_ACCESS_TYPE);
             log.error("validateNote . validation type is wrong:'{}'", accessType);
         }
-        if (errors.size() > 0) {
-            success = false;
-            log.error("validateNote . note data is incorrect:'{}'", noteRequest);
-        }
-        return new ValidateResponse(success, errors);
+        return new ValidateResponse(errors.isEmpty(), errors);
     }
 
+    @Override
     public ValidateResponse validateUser(@NonNull ValidateUserRequest userRequest) {
         log.info("validateUser .");
-        boolean success = true;
         List<ValidationError> errors = new ArrayList<>();
         String name = userRequest.getName();
         String password = userRequest.getPassword();
@@ -85,10 +83,6 @@ public class ValidationService {
             errors.add(ValidationError.WRONG_USER_PASSWORD_LENGTH);
             log.error("validateUser . user password:'{}' length should be between 8 and 100 included", password);
         }
-        if (errors.size() > 0) {
-            success = false;
-            log.error("validateUser . user data is incorrect:'{}'", userRequest);
-        }
-        return new ValidateResponse(success, errors);
+        return new ValidateResponse(errors.isEmpty(), errors);
     }
 }

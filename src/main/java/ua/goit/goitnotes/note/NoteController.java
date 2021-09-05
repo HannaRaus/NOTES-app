@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.note.dto.NoteDTO;
@@ -37,7 +40,7 @@ public class NoteController {
 
     @GetMapping(path = "/list")
     public String showNotes(Model model) {
-        log.info("NoteController.showNotes()");
+        log.info("showNotes .");
         Set<NoteDTO> notes = noteService.findAll();
         model.addAttribute("notes", notes);
         return "notes";
@@ -45,7 +48,7 @@ public class NoteController {
 
     @GetMapping(path = "/delete")
     public String delete(@RequestParam(name = "id") UUID uuid) {
-        log.info("NoteController.delete().");
+        log.info("delete() .");
         noteService.delete(uuid);
         return "redirect:/note/list";
     }

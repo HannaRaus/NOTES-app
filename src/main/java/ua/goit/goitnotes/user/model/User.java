@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import ua.goit.goitnotes.note.model.NoteDAO;
+import ua.goit.goitnotes.note.model.Note;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -35,9 +35,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private UserRole userRole;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<NoteDAO> notes;
+    private Set<Note> notes;
 
-    public User(UUID id, String name, String password, UserRole userRole, Set<NoteDAO> notes) {
+    public User(UUID id, String name, String password, UserRole userRole, Set<Note> notes) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -45,7 +45,7 @@ public class User {
         this.notes = notes;
     }
 
-    public User(String name, String password, UserRole userRole, Set<NoteDAO> notes) {
+    public User(String name, String password, UserRole userRole, Set<Note> notes) {
         this.name = name;
         this.password = password;
         this.userRole = userRole;
