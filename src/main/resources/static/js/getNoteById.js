@@ -24,7 +24,7 @@ function getNote(){
                       console.log(editedNote);
                       title.value = editedNote.title;
                       text.textContent = editedNote.content;
-                      accessType.val([editedNote.accessType]);
+                      $("[name=accessType]").val([editedNote.accessType.toLowerCase()]);
                       }};
           console.log("sending request");
           request.send();
