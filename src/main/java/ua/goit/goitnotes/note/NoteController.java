@@ -1,5 +1,6 @@
 package ua.goit.goitnotes.note;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(path = "/note")
 public class NoteController {
 
@@ -30,25 +32,18 @@ public class NoteController {
     private final NoteService noteService;
     private final UserService userService;
 
-
-    @Autowired
-    public NoteController(ValidationService validationService, NoteService noteService, UserService userService) {
-        this.validationService = validationService;
-        this.noteService = noteService;
-        this.userService = userService;
-    }
-
     @GetMapping(path = "/list")
     public String showNotes(Model model) {
-        log.info("showNotes .");
-        Set<NoteDTO> notes = noteService.findAll();
+        log.info("NoteController.showNotes()");
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Set<NoteDTO> notes = noteService.findByUserName(currentPrincipalName);
         model.addAttribute("notes", notes);
         return "notes";
     }
 
     @GetMapping(path = "/delete")
     public String delete(@RequestParam(name = "id") UUID uuid) {
-        log.info("delete() .");
+        log.info("NoteController.delete().");
         noteService.delete(uuid);
         return "redirect:/note/list";
     }
