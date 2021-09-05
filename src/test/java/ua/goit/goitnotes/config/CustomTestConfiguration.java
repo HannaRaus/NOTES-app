@@ -10,4 +10,5 @@ public class CustomTestConfiguration {
     public MarkdownProcessorCommonMarkdownImplementation markdownConverterCommonMarkdownImplementation() {
         return new MarkdownProcessorCommonMarkdownImplementation();
     }
+
 }

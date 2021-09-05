@@ -5,17 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import ua.goit.goitnotes.note.model.NoteDAO;
+import ua.goit.goitnotes.note.model.Note;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,9 +35,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private UserRole userRole;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<NoteDAO> notes;
+    private Set<Note> notes;
 
-    public User(UUID id, String name, String password, UserRole userRole, Set<NoteDAO> notes) {
+    public User(UUID id, String name, String password, UserRole userRole, Set<Note> notes) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -52,10 +45,23 @@ public class User {
         this.notes = notes;
     }
 
-    public User(String name, String password, UserRole userRole, Set<NoteDAO> notes) {
+    public User(String name, String password, UserRole userRole, Set<Note> notes) {
         this.name = name;
         this.password = password;
         this.userRole = userRole;
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getName().equals(user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

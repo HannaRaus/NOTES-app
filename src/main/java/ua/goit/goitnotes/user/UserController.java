@@ -1,20 +1,22 @@
 package ua.goit.goitnotes.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.service.UserService;
-import ua.goit.goitnotes.validation.ValidationService;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidateUserRequest;
+import ua.goit.goitnotes.validation.ValidationService;
 
 @Controller
 @RequestMapping(path = "/user")
 @RequiredArgsConstructor
 public class UserController {
-
+    @Autowired
     private final UserService userService;
+    @Autowired
     private final ValidationService validationService;
 
     @GetMapping("/registration")
@@ -24,7 +26,7 @@ public class UserController {
 
     @PostMapping("/registration")
     @ResponseBody
-    public ValidateResponse registerAndValidate(ValidateUserRequest userRequest) {
+    public ValidateResponse registerAndValidate(@RequestBody ValidateUserRequest userRequest) {
         ValidateResponse response = validationService.validateUser(userRequest);
         register(userRequest, response);
         return response;
