@@ -1,5 +1,6 @@
 package ua.goit.goitnotes.user.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
@@ -15,8 +16,9 @@ import java.util.UUID;
 
 @org.springframework.stereotype.Service
 public class UserService implements Service<User> {
-
+    @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
 
