@@ -5,13 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.note.dto.NoteDTO;
+import ua.goit.goitnotes.note.model.AccessType;
 import ua.goit.goitnotes.note.service.NoteService;
+import ua.goit.goitnotes.note.service.processors.MarkdownProcessorCommonMarkdownImplementation;
 import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.service.UserService;
 import ua.goit.goitnotes.validation.ValidateNoteRequest;
@@ -29,13 +28,15 @@ public class NoteController {
     private final ValidationService validationService;
     private final NoteService noteService;
     private final UserService userService;
+    private final MarkdownProcessorCommonMarkdownImplementation markdownProcessor;
 
 
     @Autowired
-    public NoteController(ValidationService validationService, NoteService noteService, UserService userService) {
+    public NoteController(ValidationService validationService, NoteService noteService, UserService userService, MarkdownProcessorCommonMarkdownImplementation markdownProcessor) {
         this.validationService = validationService;
         this.noteService = noteService;
         this.userService = userService;
+        this.markdownProcessor = markdownProcessor;
     }
 
     @GetMapping(path = "/list")
@@ -95,14 +96,31 @@ public class NoteController {
         }
         return response;
     }
+
     @GetMapping
     @ResponseBody
-    public NoteDTO noteToClient(@RequestParam(name = "id") UUID id){
+    public NoteDTO noteToClient(@RequestParam(name = "id") UUID id) {
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!noteService.isNotePresentForTheUser(id, currentUser)) {
             throw new ObjectNotFoundException(String.format("note %s does not exist", id));
         }
         return noteService.findById(id);
 
+    }
+
+    @GetMapping("/share")
+    public String showFormattedNotePage(@RequestParam(name = "id") UUID id) {
+        return "browsingNote";
+    }
+
+    @GetMapping("/formatted")
+    @ResponseBody
+    public String formattedNote(@RequestParam(name = "id") UUID id) {
+        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        NoteDTO note = noteService.findById(id);
+        if (note.getAccessType() == AccessType.PUBLIC.toString() || noteService.isNotePresentForTheUser(id, currentUser)) {
+            return markdownProcessor.getHTML(note.getContent());
+        }
+        throw new ObjectNotFoundException("object 'note' with specified ID not found");
     }
 }
