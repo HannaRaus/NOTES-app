@@ -37,5 +37,3 @@ out/
 .vscode/
 
 logs/
-
-src/main/node_modules

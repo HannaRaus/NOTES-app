@@ -1,8 +1,7 @@
-package ua.goit.goitnotes.user.repository;
+package ua.goit.goitnotes.user.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
-import ua.goit.goitnotes.user.model.UserRole;
 
 import java.util.Optional;
 import java.util.UUID;
