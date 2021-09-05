@@ -38,10 +38,4 @@ public class MainController {
         log.info("I'm rendering the \"login\" page");
         return "login";
     }
-
-    @GetMapping(path = "error")
-    public String error(Model model, String error) {
-        model.addAttribute("error", error);
-        return "error";
-    }
 }
