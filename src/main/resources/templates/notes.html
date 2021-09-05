@@ -27,16 +27,17 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Name</th>
+                <th class="col-sm-1" scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">Access</th>
+                <th class="col-sm-1" scope="col-">Access</th>
                 <th class="col-sm-2" scope="col" colspan="3"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="note : ${notes}">
                 <td scope="row" th:text="${note.title}"></td>
-                <td th:text="${note.content}"></td>
+                <!-- method to truncate note content and add url button for read more -->
+                <td id="content" th:href="@{/note/share/{id}(id=${note.id})}" th:text="${note.content}"></td>
                 <td th:text="${note.accessType}"></td>
                 <td align="center">
                     <a th:href="@{/note/edit/{id}(id=${note.id})}">
@@ -68,5 +69,8 @@
 <!-- scripts -->
 <script src="/js/copyFunction.js"></script>
 <script src="/js/modal.js"></script>
+<script src="/js/trimTextToSize.js"></script>
+<!-- method to truncate note content and add url button for read more -->
+<script>truncate("content", 500);</script>
 </body>
 </html>
