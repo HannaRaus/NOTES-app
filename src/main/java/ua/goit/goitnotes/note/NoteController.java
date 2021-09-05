@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.service.NoteService;
 import ua.goit.goitnotes.user.model.User;
@@ -48,6 +49,7 @@ public class NoteController {
         noteService.delete(uuid);
         return "redirect:/note/list";
     }
+
     @GetMapping("/create")
     public String showNewNotesPage() {
         return "newNote";
@@ -68,8 +70,9 @@ public class NoteController {
         }
         return response;
     }
+
     @GetMapping("/edit")
-    public String showUpdateNotesPage(@RequestParam(name="id") UUID id) {
+    public String showUpdateNotesPage(@RequestParam(name = "id") UUID id) {
         return "updateNote";
     }
 
@@ -80,12 +83,23 @@ public class NoteController {
         ValidateResponse response = validationService.validateNote(noteRequest, currentUser);
         if (response.isSuccess()) {
             NoteDTO note = new NoteDTO();
+            note.setId(UUID.fromString(noteRequest.getIdString()));
             note.setTitle(noteRequest.getTitle());
             note.setContent(noteRequest.getContent());
             note.setAccessType(noteRequest.getAccessType());
             note.setUserName(currentUser.getName());
-            noteService.create(note);
+            noteService.update(note);
         }
         return response;
+    }
+    @GetMapping
+    @ResponseBody
+    public NoteDTO noteToClient(@RequestParam(name = "id") UUID id){
+        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (!noteService.isNotePresentForTheUser(id, currentUser)) {
+            throw new ObjectNotFoundException(String.format("note %s does not exist", id));
+        }
+        return noteService.findById(id);
+
     }
 }

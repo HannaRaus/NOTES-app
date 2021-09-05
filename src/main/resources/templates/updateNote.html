@@ -17,12 +17,13 @@
 <p><textarea id="note" name="note" cols="150" rows="20" minlength="5" maxlength="10000"></textarea></p>
 <div>
     <p class="accessTypeErrorField" style="color:red"></p>
-    <input type="radio" id="private" name="accessType" value="private" checked>
+    <input type="radio" id="private" name="accessType" value="private">
     <label for="private">private</label>
     <input type="radio" id="public" name="accessType" value="public">
     <label for="public">public</label>
 </div>
 <button type="button" onclick="sendNoteToEdit()">Submit</button>
-<script src="/js/getNoteById.js"></script>
 </body>
+<script src="/js/getNoteById.js"></script>
+<script src="/js/sendNoteToEdit.js"></script>
 </html>

@@ -1,4 +1,4 @@
-        function sendNoteToCreate(){
+        function sendNoteToEdit(){
             const WRONG_TITLE_LENGTH = "title mast be at least 5 symbols, up to 100 symbols";
             const WRONG_NOTE_LENGTH = "note must be at least 5 symbols, up to 10000 symbols";
             const WRONG_ACCESS_TYPE = "please choose correct access type";
@@ -8,12 +8,11 @@
             contentErrorField.innerHTML = null;
             let accessTypeErrorField = document.querySelector('.accessTypeErrorField');
             accessTypeErrorField.innerHTML = null;
-            let uuid = document.querySelector('#uuid')
             let title = document.querySelector('#title');
             let text = document.querySelector('#note');
             let accessType = document.querySelector('input[name="accessType"]:checked');
             let request = new XMLHttpRequest();
-            let url = "/note/create";
+            let url = "/note/edit";
             request.open("POST", url, true);
             request.setRequestHeader("Content-Type", "application/json");
             request.responseType='json'
@@ -42,6 +41,6 @@
                  }}
             };
             var data = JSON.stringify({ "title": title.value, "content": text.value, "accessType": accessType.value
-             , "idString": uuid.value});
+             , "idString": getId()});
             request.send(data);
         }

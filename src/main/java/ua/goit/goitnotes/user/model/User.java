@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import ua.goit.goitnotes.note.model.NoteDAO;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,5 +50,18 @@ public class User {
         this.password = password;
         this.userRole = userRole;
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getName().equals(user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

@@ -1,12 +1,5 @@
 package ua.goit.goitnotes.note.service;
 
-import ua.goit.goitnotes.interfaces.Service;
-import ua.goit.goitnotes.note.dto.NoteDTO;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.note.model.NoteDAO;
-import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.note.repository.NoteRepository;
-import ua.goit.goitnotes.note.service.convertors.NoteConverter;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.Service;
 import ua.goit.goitnotes.note.dto.NoteDTO;
@@ -75,6 +68,13 @@ public class NoteService implements Service<NoteDTO> {
         Optional<NoteDAO> note = noteRepository.findByTitle(title);
         if(note.isPresent()){
            return user.equals(note.get().getUser());
+        }
+        return false;
+    }
+    public boolean isNotePresentForTheUser(UUID id, User user){
+        Optional<NoteDAO> note = noteRepository.findById(id);
+        if (note.isPresent()){
+            return user.equals(note.get().getUser());
         }
         return false;
     }

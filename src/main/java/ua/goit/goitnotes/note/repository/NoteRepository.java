@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface NoteRepository extends JpaRepository<NoteDAO, UUID> {
     Optional<NoteDAO> findByTitle(String title);
+    Optional<NoteDAO> findById(UUID id);
 }
