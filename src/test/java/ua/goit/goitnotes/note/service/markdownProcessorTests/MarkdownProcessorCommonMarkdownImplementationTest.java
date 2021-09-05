@@ -37,7 +37,7 @@ public class MarkdownProcessorCommonMarkdownImplementationTest {
 
                 and some **bold** and _italic_ text""";
         //when
-        String conversionResult = markdownConverter.getHTML(note);
+        String conversionResult = markdownConverter.getHtml(note);
         //then
         assertThat(conversionResult).isEqualTo("""
                 <h1>Header 1</h1>
@@ -56,6 +56,6 @@ public class MarkdownProcessorCommonMarkdownImplementationTest {
         String note = null;
         //when
         //then
-        assertThrows(DataNotAvailableException.class, () -> markdownConverter.getHTML(note));
+        assertThrows(DataNotAvailableException.class, () -> markdownConverter.getHtml(note));
     }
 }

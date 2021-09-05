@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
-import ua.goit.goitnotes.interfaces.Service;
+import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.repository.RoleRepository;
 import ua.goit.goitnotes.user.repository.UserRepository;
@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @org.springframework.stereotype.Service
-public class UserService implements Service<User> {
+public class UserService implements CrudService<User> {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
