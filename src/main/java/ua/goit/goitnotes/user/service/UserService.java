@@ -7,7 +7,7 @@ import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
 import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.user.repository.RoleRepository;
+import ua.goit.goitnotes.user.role.RoleRepository;
 import ua.goit.goitnotes.user.repository.UserRepository;
 
 import java.util.HashSet;

@@ -26,11 +26,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
-/*    @Bean
-    public User user() {
-        return new User();
-    }*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
