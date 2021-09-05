@@ -12,22 +12,32 @@
 <div class="container">
     <div class="login-register-form">
         <h2 class="form-signin-heading">Create your account</h2>
-        <div class="result" style="color:red"></div>
-        <label for="username" class="form-label mt-4">Username</label>
-        <input type="text" name="username" class="form-control" id="username"
-               placeholder="Enter username contains only latin symbols">
-        <label for="password" class="form-label mt-4">Password</label>
-        <input type="text" name="password" class="form-control" id="password"
-               placeholder="Enter password">
-    </div>
-    <div class="form-label mt-4">
-        <div class="d-grid gap-2">
-            <button class="btn btn-lg btn-primary" onclick="sendToValidateAndCreateUser()">SIGN UP</button>
+
+
+        <div class="form-group">
+            <label for="username" class="form-label mt-4">Username</label>
+            <input type="text" name="username" class="form-control" id="username"
+                   placeholder="Enter username contains only latin symbols">
         </div>
+        <span class="usernameErrorField" style="color:red"></span>
+
+        <div class="form-group">
+            <label for="password" class="form-label mt-4">Password</label>
+            <input type="text" name="password" class="form-control" id="password"
+                   placeholder="Enter password">
+        </div>
+        <span class="passwordErrorField" style="color:red"></span>
+
+        <div cass="form-group">
+            <div class="form-label mt-4">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-lg btn-primary" onclick="sendToValidateAndCreateUser()">SIGN UP</button>
+                </div>
+            </div>
+        </div>
+        <h5 class="text-center"><a href="/login">Return to Login page</a>
+        </h5>
     </div>
-    <h5 class="text-center"><a href="/login">Return to Login page</a>
-    </h5>
-</div>
 </div>
 </body>
 <script src="/js/sendToValidateUser.js"></script>
