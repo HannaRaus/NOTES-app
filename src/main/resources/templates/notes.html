@@ -24,7 +24,7 @@
                 <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
             </a>
         </h2>
-        <table class="table table-hover">
+        <table class="table table-hover" id="tab">
             <thead>
             <tr>
                 <th class="col-sm-1" scope="col">Name</th>
@@ -37,10 +37,11 @@
             <tr th:each="note : ${notes}">
                 <td scope="row" th:text="${note.title}"></td>
                 <!-- method to truncate note content and add url button for read more -->
-                <td id="content" th:href="@{/note/share/{id}(id=${note.id})}" th:text="${note.content}"></td>
+                <td class='content' th:data-href="@{/note/share/?id={id}(id=${note.id})}"
+                    th:text="${note.content}"></td>
                 <td th:text="${note.accessType}"></td>
                 <td align="center">
-                    <a th:href="@{/note/edit/{id}(id=${note.id})}">
+                    <a th:href="@{/note/edit/?id={id}(id=${note.id})}">
                         <button class="btn btn-outline-success my-2 my-sm-0">Edit</button>
                     </a>
                 </td>
@@ -52,7 +53,8 @@
                 </td>
                 <td align="center">
                     <a>
-                        <button class="btn btn-outline-info my-2 my-sm-0" th:href="@{/note/share/{id}(id=${note.id})}"
+                        <button class="btn btn-outline-info my-2 my-sm-0"
+                                th:href="@{/note/share/?id={id}(id=${note.id})}"
                                 onclick="copyURI(event)">Copy link
                         </button>
                     </a>
@@ -69,8 +71,7 @@
 <!-- scripts -->
 <script src="/js/copyFunction.js"></script>
 <script src="/js/modal.js"></script>
-<script src="/js/trimTextToSize.js"></script>
 <!-- method to truncate note content and add url button for read more -->
-<script>truncate("content", 500);</script>
+<script src="/js/trimTextToSize.js"></script>
 </body>
 </html>
