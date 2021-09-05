@@ -10,6 +10,7 @@ import ua.goit.goitnotes.note.repository.NoteRepository;
 import ua.goit.goitnotes.note.service.convertors.NoteConverter;
 import ua.goit.goitnotes.user.model.User;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -63,15 +64,25 @@ public class NoteService implements Service<NoteDTO> {
         log.info("delete .");
         try {
             noteRepository.deleteById(id);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("delete . There are no notes with such id in database");
             throw new ObjectNotFoundException("There are no notes with such id in database");
         }
     }
 
     public boolean isTitlePresetForTheUser(String title, User user) {
-        log.info("isTitlePresetForTheUser .");
-        return noteRepository.findByTitle(title)
-                .filter(noteDAO -> user.equals(noteDAO.getUser())).isPresent();
+        Optional<Note> note = noteRepository.findByTitle(title);
+        if (note.isPresent()) {
+            return user.equals(note.get().getUser());
+        }
+        return false;
+    }
+
+    public boolean isNotePresentForTheUser(UUID id, User user) {
+        Optional<Note> note = noteRepository.findById(id);
+        if (note.isPresent()) {
+            return user.equals(note.get().getUser());
+        }
+        return false;
     }
 }

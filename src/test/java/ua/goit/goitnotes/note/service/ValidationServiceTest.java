@@ -39,7 +39,7 @@ class ValidationServiceTest {
 
     private String stringId = "1162d158-0bf0-11ec-9a03-0242ac130003";
     private UUID randomId = UUID.fromString(stringId);
-   
+
     @Test
     void validateNote_NoErrors() {
         when(noteService.isTitlePresetForTheUser(anyString(), any())).thenReturn(false);
