@@ -3,7 +3,7 @@ package ua.goit.goitnotes.interfaces;
 import java.util.Set;
 import java.util.UUID;
 
-public interface Service<T> {
+public interface CrudService<T> {
 
     T create(T entity);
 

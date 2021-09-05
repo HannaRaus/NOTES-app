@@ -12,7 +12,7 @@ import ua.goit.goitnotes.interfaces.MarkdownProcessor;
 @Service
 public class MarkdownProcessorCommonMarkdownImplementation implements MarkdownProcessor {
     @Override
-    public String getHTML(String markdownText) {
+    public String getHtml(String markdownText) {
         log.info("getHTML .");
         if (markdownText == null) throw new DataNotAvailableException("note is null");
         Parser parser = Parser.builder().build();
