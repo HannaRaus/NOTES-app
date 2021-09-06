@@ -17,6 +17,7 @@ import ua.goit.goitnotes.validation.ValidateNoteRequest;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidationService;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -111,7 +112,9 @@ public class NoteController {
     public String formattedNote(@RequestParam(name = "id") UUID id) {
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         NoteDTO note = noteService.findById(id);
-        if (note.getAccessType() == AccessType.PUBLIC.toString() || noteService.isNotePresentForTheUser(id, currentUser)) {
+        if (note.getAccessType() == AccessType.PUBLIC.toString() ||
+                (Objects.nonNull(currentUser.getName()) &&
+                noteService.isNotePresentForTheUser(id, currentUser))) {
             return markdownProcessor.getHtml(note.getContent());
         }
         throw new ObjectNotFoundException("object 'note' with specified ID not found");
