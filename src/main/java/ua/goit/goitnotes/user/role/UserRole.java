@@ -1,10 +1,11 @@
-package ua.goit.goitnotes.user.model;
+package ua.goit.goitnotes.user.role;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import ua.goit.goitnotes.user.model.User;
 
 import javax.persistence.*;
 import java.util.Set;

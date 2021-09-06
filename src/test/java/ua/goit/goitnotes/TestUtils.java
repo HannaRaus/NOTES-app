@@ -2,7 +2,7 @@ package ua.goit.goitnotes;
 
 import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.user.model.UserRole;
+import ua.goit.goitnotes.user.role.UserRole;
 
 import java.util.HashSet;
 import java.util.Set;

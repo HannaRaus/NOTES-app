@@ -2,23 +2,25 @@ package ua.goit.goitnotes.note.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.interfaces.Service;
+import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.note.repository.NoteRepository;
 import ua.goit.goitnotes.note.service.convertors.NoteConverter;
 import ua.goit.goitnotes.user.model.User;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
-@org.springframework.stereotype.Service
+@Service
 @AllArgsConstructor
-public class NoteService implements Service<NoteDTO> {
+public class NoteService implements CrudService<NoteDTO> {
 
     private final NoteRepository noteRepository;
     private final NoteConverter noteConverter;
@@ -84,5 +86,14 @@ public class NoteService implements Service<NoteDTO> {
             return user.equals(note.get().getUser());
         }
         return false;
+    }
+
+    public Set<NoteDTO> findByUserName(String userName) {
+        Set<NoteDTO> notes = new HashSet<>();
+
+        noteRepository.findByUser_Name(userName)
+                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConverter.toDTO(noteDAO))));
+
+        return notes;
     }
 }

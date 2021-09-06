@@ -1,7 +1,7 @@
         function sendNoteToEdit(){
-            const WRONG_TITLE_LENGTH = "title mast be at least 5 symbols, up to 100 symbols";
-            const WRONG_NOTE_LENGTH = "note must be at least 5 symbols, up to 10000 symbols";
-            const WRONG_ACCESS_TYPE = "please choose correct access type";
+            const WRONG_TITLE_LENGTH = "The title mast be at least 5 symbols, up to 100 symbols";
+            const WRONG_NOTE_LENGTH = "The note must be at least 5 symbols, up to 10000 symbols";
+            const WRONG_ACCESS_TYPE = "Please choose correct access type";
             let titleErrorField = document.querySelector('.titleErrorField');
             titleErrorField.innerHTML = null;
             let contentErrorField = document.querySelector('.contentErrorField');
