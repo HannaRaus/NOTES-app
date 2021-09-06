@@ -2,7 +2,6 @@ package ua.goit.goitnotes.note;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,7 +112,7 @@ public class NoteController {
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         NoteDTO note = noteService.findById(id);
         if (note.getAccessType() == AccessType.PUBLIC.toString() || noteService.isNotePresentForTheUser(id, currentUser)) {
-            return markdownProcessor.getHTML(note.getContent());
+            return markdownProcessor.getHtml(note.getContent());
         }
         throw new ObjectNotFoundException("object 'note' with specified ID not found");
     }
