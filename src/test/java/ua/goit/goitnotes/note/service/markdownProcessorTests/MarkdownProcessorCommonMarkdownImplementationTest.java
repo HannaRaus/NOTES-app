@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ua.goit.goitnotes.config.CustomTestConfiguration;
-import ua.goit.goitnotes.exceptions.DataNotAvailableException;
+import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
 import ua.goit.goitnotes.note.service.processors.MarkdownProcessorCommonMarkdownImplementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,6 +56,6 @@ public class MarkdownProcessorCommonMarkdownImplementationTest {
         String note = null;
         //when
         //then
-        assertThrows(DataNotAvailableException.class, () -> markdownConverter.getHtml(note));
+        assertThrows(ObjectNotFoundException.class, () -> markdownConverter.getHtml(note));
     }
 }
