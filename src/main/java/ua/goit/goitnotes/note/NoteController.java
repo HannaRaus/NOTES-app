@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import ua.goit.goitnotes.note.dto.FormattedNote;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.AccessType;
 import ua.goit.goitnotes.note.service.NoteService;
@@ -109,14 +110,22 @@ public class NoteController {
 
     @GetMapping("/formatted")
     @ResponseBody
-    public String formattedNote(@RequestParam(name = "id") UUID id) {
+    public FormattedNote formattedNote(@RequestParam(name = "id") UUID id) {
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        NoteDTO note = noteService.findById(id);
-        if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
-                (Objects.nonNull(currentUser.getName()) &&
-                noteService.isNotePresentForTheUser(id, currentUser))) {
-            return markdownProcessor.getHtml(note.getContent());
+        FormattedNote formattedNote = new FormattedNote();
+        try {
+            NoteDTO note = noteService.findById(id);
+            if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
+                    (Objects.nonNull(currentUser.getName()) &&
+                            noteService.isNotePresentForTheUser(id, currentUser))) {
+                formattedNote.setTitle(note.getTitle());
+                formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
+                return formattedNote;
+            }
+        } catch (RuntimeException ex) {
+            return formattedNote;
+
         }
-        throw new ObjectNotFoundException("object 'note' with specified ID not found");
+        return formattedNote;
     }
 }
