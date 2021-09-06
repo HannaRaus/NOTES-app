@@ -9,6 +9,7 @@ function getId(){
     function getFormattedNote(){
         let id = getId();
         let request = new XMLHttpRequest();
+        let noteTitlePlace = document.querySelector('.NoteTitlePlace')
         let notePlace = document.querySelector('.NotePlace');
               let url = "/note/formatted?id=" + getId();
               request.open("GET", url, true);
@@ -19,6 +20,7 @@ function getId(){
                           console.log("response received");
                           var formattedNote = request.response;
                           console.log(formattedNote);
+                          noteTitlePlace.innerHTML='My note';
                           notePlace.innerHTML=formattedNote;
                           }};
               console.log("sending request");
