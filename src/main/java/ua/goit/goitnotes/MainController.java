@@ -6,10 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.goit.goitnotes.note.dto.NoteDTO;
-import ua.goit.goitnotes.note.service.NoteService;
-
-import java.util.Set;
 
 
 @Controller
@@ -17,8 +13,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
-
-    private final NoteService noteService;
 
     @GetMapping
     public String doGet() {

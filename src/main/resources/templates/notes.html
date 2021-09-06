@@ -37,11 +37,11 @@
             <tr th:each="note : ${notes}">
                 <td scope="row" th:text="${note.title}"></td>
                 <!-- method to truncate note content and add url button for read more -->
-                <td class='content' th:data-href="@{/note/share/?id={id}(id=${note.id})}"
+                <td class='content' th:data-href="@{/note/share?id={id}(id=${note.id})}"
                     th:text="${note.content}"></td>
                 <td th:text="${note.accessType}"></td>
                 <td align="center">
-                    <a th:href="@{/note/edit/?id={id}(id=${note.id})}">
+                    <a th:href="@{/note/edit?id={id}(id=${note.id})}">
                         <button class="btn btn-outline-success my-2 my-sm-0">Edit</button>
                     </a>
                 </td>
