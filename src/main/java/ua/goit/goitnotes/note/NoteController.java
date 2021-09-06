@@ -112,7 +112,7 @@ public class NoteController {
     public String formattedNote(@RequestParam(name = "id") UUID id) {
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         NoteDTO note = noteService.findById(id);
-        if (note.getAccessType() == AccessType.PUBLIC.toString() ||
+        if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
                 (Objects.nonNull(currentUser.getName()) &&
                 noteService.isNotePresentForTheUser(id, currentUser))) {
             return markdownProcessor.getHtml(note.getContent());
