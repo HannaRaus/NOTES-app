@@ -7,12 +7,12 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.user.model.UserRole;
-import ua.goit.goitnotes.user.service.RoleService;
+import ua.goit.goitnotes.user.role.RoleService;
+import ua.goit.goitnotes.user.role.UserRole;
+import ua.goit.goitnotes.user.role.UserRoles;
 import ua.goit.goitnotes.user.service.UserService;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -39,12 +39,11 @@ public class AppReadyToUseListener {
 
     private void addDefaultRoles() {
 
-        List<String> userRoles = Arrays.asList("ROLE_ADMIN", "ROLE_USER");
-
-        userRoles.forEach((r) -> {
-            UserRole user = new UserRole();
-            user.setName(r);
-            roleService.create(user);
+        Arrays.stream(UserRoles.values())
+                .forEach((r) -> {
+            UserRole userRole = new UserRole();
+                    userRole.setName(r.toString());
+            roleService.create(userRole);
         });
 
     }

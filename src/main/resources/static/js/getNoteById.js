@@ -3,7 +3,6 @@ function getId(){
         .location
         .search
         .replace('?id=','');
-        console.log(id);
     return id;
     }
 
@@ -19,13 +18,11 @@ function getNote(){
           request.responseType='json';
           request.onreadystatechange = function () {
                 if (request.readyState === 4 && request.status === 200) {
-                      console.log("response received");
                       var editedNote = request.response;
                       console.log(editedNote);
                       title.value = editedNote.title;
                       text.textContent = editedNote.content;
                       $("[name=accessType]").val([editedNote.accessType.toLowerCase()]);
                       }};
-          console.log("sending request");
           request.send();
 }

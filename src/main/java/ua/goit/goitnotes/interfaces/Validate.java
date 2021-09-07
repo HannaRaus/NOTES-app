@@ -6,6 +6,6 @@ import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidateUserRequest;
 
 public interface Validate {
-    public ValidateResponse validateNote(ValidateNoteRequest noteRequest, User currentUser);
+    ValidateResponse validateNote(ValidateNoteRequest noteRequest, User currentUser);
     ValidateResponse validateUser(ValidateUserRequest userRequest);
 }

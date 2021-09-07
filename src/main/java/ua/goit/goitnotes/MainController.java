@@ -6,10 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.goit.goitnotes.note.dto.NoteDTO;
-import ua.goit.goitnotes.note.service.NoteService;
-
-import java.util.Set;
 
 
 @Controller
@@ -18,14 +14,10 @@ import java.util.Set;
 @Slf4j
 public class MainController {
 
-    private final NoteService noteService;
-
     @GetMapping
-    public String doGet(Model model) {
+    public String doGet() {
         log.info("NoteController.showNotes() I'm rendering the \"notes\" page");
-        Set<NoteDTO> notes = noteService.findAll();
-        model.addAttribute("notes", notes);
-        return "notes";
+        return "redirect:/note/list";
     }
 
     @GetMapping("login")
@@ -39,11 +31,5 @@ public class MainController {
         }
         log.info("I'm rendering the \"login\" page");
         return "login";
-    }
-
-    @GetMapping(path = "error")
-    public String error(Model model, String error) {
-        model.addAttribute("error", error);
-        return "error";
     }
 }

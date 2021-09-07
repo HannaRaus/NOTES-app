@@ -1,8 +1,7 @@
-package ua.goit.goitnotes.user.service;
+package ua.goit.goitnotes.user.role;
 
+import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.user.model.UserRole;
-import ua.goit.goitnotes.user.repository.RoleRepository;
 import ua.goit.goitnotes.interfaces.CrudService;
 
 import java.util.HashSet;
@@ -10,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-@org.springframework.stereotype.Service
+@Service
 public class RoleService implements CrudService<UserRole> {
 
     private final RoleRepository roleRepository;

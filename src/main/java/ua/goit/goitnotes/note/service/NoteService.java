@@ -92,9 +92,7 @@ public class NoteService implements CrudService<NoteDTO> {
         Set<NoteDTO> notes = new HashSet<>();
 
         noteRepository.findByUser_Name(userName)
-                .forEach(note -> {
-                    note.ifPresent(noteDAO -> notes.add(noteConverter.toDTO(noteDAO)));
-                });
+                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConverter.toDTO(noteDAO))));
 
         return notes;
     }

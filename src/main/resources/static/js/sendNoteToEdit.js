@@ -1,7 +1,8 @@
         function sendNoteToEdit(){
-            const WRONG_TITLE_LENGTH = "title mast be at least 5 symbols, up to 100 symbols";
-            const WRONG_NOTE_LENGTH = "note must be at least 5 symbols, up to 10000 symbols";
-            const WRONG_ACCESS_TYPE = "please choose correct access type";
+            const WRONG_TITLE_LENGTH = "The title mast be at least 5 symbols, up to 100 symbols";
+            const WRONG_NOTE_LENGTH = "The note must be at least 5 symbols, up to 10000 symbols";
+            const WRONG_ACCESS_TYPE = "Please choose correct access type";
+            const NOT_UNIQUE_TITLE = "Please use unique title"
             let titleErrorField = document.querySelector('.titleErrorField');
             titleErrorField.innerHTML = null;
             let contentErrorField = document.querySelector('.contentErrorField');
@@ -35,6 +36,9 @@
                                 break;
                             case 'WRONG_ACCESS_TYPE':
                                 accessTypeErrorField.innerHTML = WRONG_ACCESS_TYPE;
+                                break;
+                            case 'NOTE_TITLE_NOT_UNIQUE_FOR_CURRENT_USER':
+                                titleErrorField.innerHTML = NOT_UNIQUE_TITLE;
                                 break;
                             }
                             })

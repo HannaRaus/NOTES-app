@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import ua.goit.goitnotes.note.model.Note;
+import ua.goit.goitnotes.user.role.UserRole;
 
 import javax.persistence.*;
 import java.util.Objects;
