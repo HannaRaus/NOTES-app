@@ -18,9 +18,8 @@ import ua.goit.goitnotes.validation.ValidateNoteRequest;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidationService;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -37,7 +36,9 @@ public class NoteController {
     public String showNotes(Model model) {
         log.info("NoteController.showNotes()");
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
-        Set<NoteDTO> notes = noteService.findByUserName(currentPrincipalName);
+        List<NoteDTO> notes = noteService.findByUserName(currentPrincipalName).stream()
+                .sorted(Comparator.comparing(NoteDTO::getTitle))
+                .collect(Collectors.toList());
         model.addAttribute("notes", notes);
         return "notes";
     }
