@@ -11,12 +11,12 @@ import ua.goit.goitnotes.user.service.UserService;
 
 @Slf4j
 @Component
-public class NoteConverter implements Convertor<Note, NoteDTO> {
+public class NoteConvertor implements Convertor<Note, NoteDTO> {
 
     private final UserService userService;
 
     @Autowired
-    public NoteConverter(UserService userService) {
+    public NoteConvertor(UserService userService) {
         this.userService = userService;
     }
 
