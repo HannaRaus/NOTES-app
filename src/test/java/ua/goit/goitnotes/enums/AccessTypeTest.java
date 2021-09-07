@@ -1,7 +1,7 @@
 package ua.goit.goitnotes.enums;
 
 import org.junit.jupiter.api.Test;
-import ua.goit.goitnotes.exceptions.InvalidAccessTypeException;
+import ua.goit.goitnotes.error_handling.InvalidAccessTypeException;
 import ua.goit.goitnotes.note.model.AccessType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
