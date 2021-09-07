@@ -1,7 +1,7 @@
 package ua.goit.goitnotes.user.role;
 
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.CrudService;
 
 import java.util.HashSet;

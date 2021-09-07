@@ -3,7 +3,7 @@ package ua.goit.goitnotes.note.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.Note;

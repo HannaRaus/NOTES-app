@@ -1,4 +1,4 @@
-package ua.goit.goitnotes.exceptions;
+package ua.goit.goitnotes.error_handling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

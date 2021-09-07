@@ -3,12 +3,12 @@ package ua.goit.goitnotes.user.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
-import ua.goit.goitnotes.exceptions.UserAlreadyExistException;
+import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
+import ua.goit.goitnotes.error_handling.UserAlreadyExistException;
 import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.user.role.RoleRepository;
 import ua.goit.goitnotes.user.repository.UserRepository;
+import ua.goit.goitnotes.user.role.RoleRepository;
 
 import java.util.HashSet;
 import java.util.Optional;
