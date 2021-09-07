@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--Head-->
 <head th:fragment="head">
     <title th:include=":: #pageTitle">GOIT NOTES</title>
@@ -47,7 +47,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto"></ul>
-            <form class="form-inline my-2 my-lg-0" action="/logout">
+            <form sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0" action="/logout">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Logout</button>
             </form>
         </div>
