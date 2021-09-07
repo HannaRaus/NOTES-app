@@ -8,7 +8,7 @@ import ua.goit.goitnotes.interfaces.CrudService;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.note.repository.NoteRepository;
-import ua.goit.goitnotes.note.service.convertors.NoteConverter;
+import ua.goit.goitnotes.note.service.convertors.NoteConvertor;
 import ua.goit.goitnotes.user.model.User;
 
 import java.util.HashSet;
@@ -23,19 +23,19 @@ import java.util.stream.Collectors;
 public class NoteService implements CrudService<NoteDTO> {
 
     private final NoteRepository noteRepository;
-    private final NoteConverter noteConverter;
+    private final NoteConvertor noteConvertor;
 
     @Override
     public NoteDTO findById(UUID uuid) {
         log.info("findById .");
-        return noteRepository.findById(uuid).map(noteConverter::toDTO)
+        return noteRepository.findById(uuid).map(noteConvertor::toDTO)
                 .orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found"));
     }
 
     @Override
     public NoteDTO findByName(String name) {
         log.info("findByName .");
-        return noteRepository.findByTitle(name).map(noteConverter::toDTO)
+        return noteRepository.findByTitle(name).map(noteConvertor::toDTO)
                 .orElseThrow(() -> new ObjectNotFoundException("object 'note' with specified ID not found"));
     }
 
@@ -43,22 +43,22 @@ public class NoteService implements CrudService<NoteDTO> {
     public Set<NoteDTO> findAll() {
         log.info("findAll .");
         return noteRepository.findAll().stream()
-                .map(noteConverter::toDTO)
+                .map(noteConvertor::toDTO)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public NoteDTO create(NoteDTO entity) {
         log.info("create .");
-        Note note = noteConverter.fromDTO(entity);
-        return noteConverter.toDTO(noteRepository.save(note));
+        Note note = noteConvertor.fromDTO(entity);
+        return noteConvertor.toDTO(noteRepository.save(note));
     }
 
     @Override
     public NoteDTO update(NoteDTO entity) {
         log.info("update .");
-        Note note = noteConverter.fromDTO(entity);
-        return noteConverter.toDTO(noteRepository.save(note));
+        Note note = noteConvertor.fromDTO(entity);
+        return noteConvertor.toDTO(noteRepository.save(note));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class NoteService implements CrudService<NoteDTO> {
         Set<NoteDTO> notes = new HashSet<>();
 
         noteRepository.findByUser_Name(userName)
-                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConverter.toDTO(noteDAO))));
+                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConvertor.toDTO(noteDAO))));
 
         return notes;
     }

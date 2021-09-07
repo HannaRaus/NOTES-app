@@ -1,9 +1,6 @@
-package ua.goit.goitnotes.interfaces;
+package ua.goit.goitnotes.validation;
 
 import ua.goit.goitnotes.user.model.User;
-import ua.goit.goitnotes.validation.ValidateNoteRequest;
-import ua.goit.goitnotes.validation.ValidateResponse;
-import ua.goit.goitnotes.validation.ValidateUserRequest;
 
 public interface Validate {
     ValidateResponse validateNote(ValidateNoteRequest noteRequest, User currentUser);

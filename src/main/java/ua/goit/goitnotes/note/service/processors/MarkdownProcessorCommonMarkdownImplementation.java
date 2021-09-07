@@ -6,7 +6,6 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
-import ua.goit.goitnotes.interfaces.MarkdownProcessor;
 
 @Slf4j
 @Service

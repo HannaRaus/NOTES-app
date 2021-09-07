@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.goit.goitnotes.interfaces.Validate;
 import ua.goit.goitnotes.note.model.AccessType;
 import ua.goit.goitnotes.note.service.NoteService;
 import ua.goit.goitnotes.user.model.User;
