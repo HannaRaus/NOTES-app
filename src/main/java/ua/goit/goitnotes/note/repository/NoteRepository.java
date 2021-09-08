@@ -13,4 +13,7 @@ public interface NoteRepository extends JpaRepository<Note, UUID> {
     Optional<Note> findById(UUID id);
 
     Set<Optional<Note>> findByUser_Name(String userName);
+
+    Set<Optional<Note>> findByUser_NameAndContentContaining(String userName, String contains);
+
 }
