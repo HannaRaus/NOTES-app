@@ -11,11 +11,9 @@ import ua.goit.goitnotes.note.repository.NoteRepository;
 import ua.goit.goitnotes.note.service.convertors.NoteConvertor;
 import ua.goit.goitnotes.user.model.User;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -40,11 +38,9 @@ public class NoteService implements CrudService<NoteDTO> {
     }
 
     @Override
-    public Set<NoteDTO> findAll() {
+    public List<NoteDTO> findAll() {
         log.info("findAll .");
-        return noteRepository.findAll().stream()
-                .map(noteConvertor::toDTO)
-                .collect(Collectors.toSet());
+        return noteConvertor.listToDTO(noteRepository.findAll());
     }
 
     @Override
@@ -75,38 +71,22 @@ public class NoteService implements CrudService<NoteDTO> {
     public boolean isTitlePresetForTheUser(String title, User user) {
         log.info("isTitlePresetForTheUser .");
         Optional<Note> note = noteRepository.findByTitle(title);
-        if (note.isPresent()) {
-            return user.equals(note.get().getUser());
-        }
-        return false;
+        return note.filter(value -> user.equals(value.getUser())).isPresent();
     }
 
     public boolean isNotePresentForTheUser(UUID id, User user) {
         log.info("isNotePresentForTheUser .");
         Optional<Note> note = noteRepository.findById(id);
-        if (note.isPresent()) {
-            return user.equals(note.get().getUser());
-        }
-        return false;
+        return note.filter(value -> user.equals(value.getUser())).isPresent();
     }
 
-    public Set<NoteDTO> findByUserName(String userName) {
+    public List<NoteDTO> findByUserName(String userName) {
         log.info("findByUserName .");
-        Set<NoteDTO> notes = new HashSet<>();
-
-        noteRepository.findByUser_Name(userName)
-                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConvertor.toDTO(noteDAO))));
-
-        return notes;
+        return noteConvertor.listToDTO(noteRepository.findByUser_Name(userName));
     }
 
-    public Set<NoteDTO> findByUserNameAndContentLike(String userName, String contains) {
+    public List<NoteDTO> findByUserNameAndContentLike(UUID userId, String contains) {
         log.info("findByUserNameAndContentLike .");
-        Set<NoteDTO> notes = new HashSet<>();
-
-        noteRepository.findByUser_NameAndContentContaining(userName, contains)
-                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConvertor.toDTO(noteDAO))));
-
-        return notes;
+        return noteConvertor.listToDTO(noteRepository.findNotesForUserByMask(userId, contains));
     }
 }

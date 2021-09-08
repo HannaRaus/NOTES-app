@@ -1,6 +1,6 @@
 package ua.goit.goitnotes.interfaces;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 public interface CrudService<T> {
@@ -11,7 +11,7 @@ public interface CrudService<T> {
 
     void delete(UUID id);
 
-    Set<T> findAll();
+    List<T> findAll();
 
     T findById(UUID id);
 

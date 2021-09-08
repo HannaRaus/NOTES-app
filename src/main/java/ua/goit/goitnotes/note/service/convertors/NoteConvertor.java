@@ -9,6 +9,9 @@ import ua.goit.goitnotes.note.model.AccessType;
 import ua.goit.goitnotes.note.model.Note;
 import ua.goit.goitnotes.user.service.UserService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class NoteConvertor implements Convertor<Note, NoteDTO> {
@@ -32,5 +35,10 @@ public class NoteConvertor implements Convertor<Note, NoteDTO> {
         log.info("toDTO .");
         return new NoteDTO(note.getId(), note.getTitle(), note.getContent(),
                 note.getAccessType().name(), note.getUser().getName());
+    }
+
+    public List<NoteDTO> listToDTO(List<Note> notes){
+        log.info("listToDTO .");
+        return notes.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
