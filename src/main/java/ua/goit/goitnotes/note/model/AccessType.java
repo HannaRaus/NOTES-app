@@ -2,7 +2,7 @@ package ua.goit.goitnotes.note.model;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import ua.goit.goitnotes.exceptions.InvalidAccessTypeException;
+import ua.goit.goitnotes.error_handling.InvalidAccessTypeException;
 
 import java.util.Arrays;
 

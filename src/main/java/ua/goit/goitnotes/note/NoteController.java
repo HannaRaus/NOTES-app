@@ -5,8 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ua.goit.goitnotes.exceptions.ObjectNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
 import ua.goit.goitnotes.note.dto.FormattedNote;
 import ua.goit.goitnotes.note.dto.NoteDTO;
 import ua.goit.goitnotes.note.model.AccessType;
@@ -18,9 +23,8 @@ import ua.goit.goitnotes.validation.ValidateNoteRequest;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidationService;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -37,7 +41,9 @@ public class NoteController {
     public String showNotes(Model model) {
         log.info("NoteController.showNotes()");
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
-        Set<NoteDTO> notes = noteService.findByUserName(currentPrincipalName);
+        List<NoteDTO> notes = noteService.findByUserName(currentPrincipalName).stream()
+                .sorted(Comparator.comparing(NoteDTO::getTitle))
+                .collect(Collectors.toList());
         model.addAttribute("notes", notes);
         return "notes";
     }
