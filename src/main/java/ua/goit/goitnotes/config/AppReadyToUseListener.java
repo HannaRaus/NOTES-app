@@ -35,7 +35,6 @@ public class AppReadyToUseListener {
             userService.findByName(defaultAdminName);
         } catch (ObjectNotFoundException ex) {
             log.debug(ex.getMessage());
-        } finally {
             addDefaultRoles();
             addAdminUser();
         }
