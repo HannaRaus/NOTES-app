@@ -23,7 +23,10 @@ import ua.goit.goitnotes.validation.ValidateNoteRequest;
 import ua.goit.goitnotes.validation.ValidateResponse;
 import ua.goit.goitnotes.validation.ValidationService;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -52,9 +55,8 @@ public class NoteController {
     public String showSearchForm(@RequestParam (name = "contains") String contains, Model model) {
         log.info("NoteController.showSearchForm()");
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<NoteDTO> notes = noteService.findByUserNameAndContentLike(currentPrincipalName, contains).stream()
-                .sorted(Comparator.comparing(NoteDTO::getTitle))
-                .collect(Collectors.toList());
+        List<NoteDTO> notes = noteService.findByUserNameAndContentLike(userService.findByName(currentPrincipalName).getId(), contains);
+
         model.addAttribute("notes", notes);
         return "notes";
     }
@@ -141,7 +143,6 @@ public class NoteController {
             }
         } catch (RuntimeException ex) {
             return formattedNote;
-
         }
         return formattedNote;
     }

@@ -4,9 +4,8 @@ import org.springframework.stereotype.Service;
 import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
 import ua.goit.goitnotes.interfaces.CrudService;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -38,8 +37,8 @@ public class RoleService implements CrudService<UserRole> {
     }
 
     @Override
-    public Set<UserRole> findAll() {
-        return new HashSet<>(roleRepository.findAll());
+    public List<UserRole> findAll() {
+        return roleRepository.findAll();
     }
 
     @Override

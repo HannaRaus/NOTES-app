@@ -10,9 +10,8 @@ import ua.goit.goitnotes.user.model.User;
 import ua.goit.goitnotes.user.repository.UserRepository;
 import ua.goit.goitnotes.user.role.RoleRepository;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -42,8 +41,8 @@ public class UserService implements CrudService<User> {
     }
 
     @Override
-    public Set<User> findAll() {
-        return new HashSet<>(userRepository.findAll());
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -78,5 +77,4 @@ public class UserService implements CrudService<User> {
         user.setPassword(encoder.encode(user.getPassword()));
         return user;
     }
-
 }
