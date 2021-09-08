@@ -50,9 +50,10 @@
             <!--Set variable current endpoint-->
             <div th:with="endpoint=${#httpServletRequest.requestURI}">
                 <!--display search form only on "/note/list" or "/note/search" endpoints-->
-                <form th:if="${endpoint == '/note/list'} or ${endpoint == '/note/search'}"
-                      class="form-inline my-2 my-lg-0" action="/note/search">
-                    <input class="form-control mr-sm-2" style="width: 300px;" name="contains" id="contains" type="search"
+                <form th:if="${endpoint == '/note/list'} or ${endpoint == '/note/search'} or ${endpoint == '/note/share'}"
+                      sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0" action="/note/search">
+                    <input class="form-control mr-sm-2" style="width: 300px;"
+                           name="contains" id="contains" type="search"
                            th:value="${contains}" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
