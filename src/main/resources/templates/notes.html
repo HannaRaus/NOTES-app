@@ -7,11 +7,15 @@
 <body>
 <!--Import navigation bar-->
 <div th:replace="fragments :: navibar"></div>
-<!--Set variable notes.size()-->
-<div th:with="listSize=${#lists.size(notes)}">
+<!--Set variable notes.size() & current endpoint-->
+<div th:with="listSize=${#lists.size(notes)}, endpoint=${#httpServletRequest.requestURI}">
     <!--In case the list is empty-->
     <div th:if="${listSize <= 0}">
-        <h2>No notes yet
+        <h2 th:switch="${endpoint}">
+            <!--Render correct title after search-->
+            <span th:case="'/note/search'">No notes with such content</span>
+            <!--In other cases-->
+            <span th:case="*" >No notes yet</span>
             <a href="/note/create">
                 <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
             </a>
@@ -19,7 +23,11 @@
     </div>
     <!--Unless the list is empty/ Rendering content-->
     <div th:unless="${listSize <= 0}">
-        <h2>My notes - <span th:text="${listSize}"></span>
+        <h2 th:switch="${endpoint}">
+            <!--Render correct title after search "Result + size"-->
+            <span th:case="'/note/search'">Found notes - <span th:text="${listSize}"></span></span>
+            <!--In other cases show "My notes + size"-->
+            <span th:case="*" >My notes - <span th:text="${listSize}"></span></span>
             <a href="/note/create">
                 <button class="btn btn-warning my-2 my-sm-0" type="submit">Create</button>
             </a>

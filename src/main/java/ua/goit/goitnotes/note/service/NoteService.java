@@ -73,6 +73,7 @@ public class NoteService implements CrudService<NoteDTO> {
     }
 
     public boolean isTitlePresetForTheUser(String title, User user) {
+        log.info("isTitlePresetForTheUser .");
         Optional<Note> note = noteRepository.findByTitle(title);
         if (note.isPresent()) {
             return user.equals(note.get().getUser());
@@ -81,6 +82,7 @@ public class NoteService implements CrudService<NoteDTO> {
     }
 
     public boolean isNotePresentForTheUser(UUID id, User user) {
+        log.info("isNotePresentForTheUser .");
         Optional<Note> note = noteRepository.findById(id);
         if (note.isPresent()) {
             return user.equals(note.get().getUser());
@@ -89,9 +91,20 @@ public class NoteService implements CrudService<NoteDTO> {
     }
 
     public Set<NoteDTO> findByUserName(String userName) {
+        log.info("findByUserName .");
         Set<NoteDTO> notes = new HashSet<>();
 
         noteRepository.findByUser_Name(userName)
+                .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConvertor.toDTO(noteDAO))));
+
+        return notes;
+    }
+
+    public Set<NoteDTO> findByUserNameAndContentLike(String userName, String contains) {
+        log.info("findByUserNameAndContentLike .");
+        Set<NoteDTO> notes = new HashSet<>();
+
+        noteRepository.findByUser_NameAndContentContaining(userName, contains)
                 .forEach(note -> note.ifPresent(noteDAO -> notes.add(noteConvertor.toDTO(noteDAO))));
 
         return notes;

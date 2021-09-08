@@ -48,6 +48,17 @@ public class NoteController {
         return "notes";
     }
 
+    @GetMapping(path = "/search")
+    public String showSearchForm(@RequestParam (name = "contains") String contains, Model model) {
+        log.info("NoteController.showSearchForm()");
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<NoteDTO> notes = noteService.findByUserNameAndContentLike(currentPrincipalName, contains).stream()
+                .sorted(Comparator.comparing(NoteDTO::getTitle))
+                .collect(Collectors.toList());
+        model.addAttribute("notes", notes);
+        return "notes";
+    }
+
     @GetMapping(path = "/delete")
     public String delete(@RequestParam(name = "id") UUID uuid) {
         log.info("NoteController.delete().");
