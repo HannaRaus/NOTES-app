@@ -17,12 +17,14 @@ function getNote(){
           request.setRequestHeader("Content-Type", "application/json");
           request.responseType='json';
           request.onreadystatechange = function () {
-                if (request.readyState === 4 && request.status === 200) {
+                if (request.status === 200) {
                       var editedNote = request.response;
                       console.log(editedNote);
                       title.value = editedNote.title;
                       text.textContent = editedNote.content;
                       $("[name=accessType]").val([editedNote.accessType.toLowerCase()]);
-                      }};
+                      }
+                if(request.status === 404) {
+                window.location.href = '/error';}};
           request.send();
 }
