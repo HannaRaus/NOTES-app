@@ -5,12 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ua.goit.goitnotes.error_handling.ObjectNotFoundException;
 import ua.goit.goitnotes.note.dto.FormattedNote;
 import ua.goit.goitnotes.note.dto.NoteDTO;
@@ -25,7 +20,6 @@ import ua.goit.goitnotes.validation.ValidationService;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,7 +46,7 @@ public class NoteController {
     }
 
     @GetMapping(path = "/search")
-    public String showSearchForm(@RequestParam (name = "contains") String contains, Model model) {
+    public String showSearchForm(@RequestParam(name = "contains") String contains, Model model) {
         log.info("NoteController.showSearchForm()");
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
         List<NoteDTO> notes = noteService.findByUserNameAndContentLike(userService.findByName(currentPrincipalName).getId(), contains);
@@ -114,11 +108,11 @@ public class NoteController {
     @GetMapping
     @ResponseBody
     public NoteDTO noteToClient(@RequestParam(name = "id") UUID id) {
-        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (!noteService.isNotePresentForTheUser(id, currentUser)) {
+        NoteDTO note = noteService.findById(id);
+        if (!note.getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
             throw new ObjectNotFoundException(String.format("note %s does not exist", id));
         }
-        return noteService.findById(id);
+        return note;
 
     }
 
@@ -130,13 +124,11 @@ public class NoteController {
     @GetMapping("/formatted")
     @ResponseBody
     public FormattedNote formattedNote(@RequestParam(name = "id") UUID id) {
-        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         FormattedNote formattedNote = new FormattedNote();
         try {
             NoteDTO note = noteService.findById(id);
             if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
-                    (Objects.nonNull(currentUser.getName()) &&
-                            noteService.isNotePresentForTheUser(id, currentUser))) {
+                    note.getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
                 formattedNote.setTitle(note.getTitle());
                 formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
                 return formattedNote;
