@@ -137,11 +137,15 @@ public class NoteController {
         log.info("NoteController.formattedNote()");
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         FormattedNote formattedNote = new FormattedNote();
-        NoteDTO note = noteService.findById(id);
-        if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
-                (note.getUserName().equals(currentUserName))) {
-            formattedNote.setTitle(note.getTitle());
-            formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
+        try {
+            NoteDTO note = noteService.findById(id);
+            if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
+                    (note.getUserName().equals(currentUserName))) {
+                formattedNote.setTitle(note.getTitle());
+                formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
+            }
+        } catch (RuntimeException ex) {
+            return formattedNote;
         }
         return formattedNote;
     }
