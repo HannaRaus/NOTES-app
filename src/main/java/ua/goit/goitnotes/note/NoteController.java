@@ -115,10 +115,11 @@ public class NoteController {
     @ResponseBody
     public NoteDTO noteToClient(@RequestParam(name = "id") UUID id) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!noteService.isNotePresentForTheUser(id, currentUserName)) {
+        NoteDTO note = noteService.findById(id);
+        if (!noteService.isNotePresentForTheUser(note, currentUserName)) {
             throw new ObjectNotFoundException(String.format("note %s does not exist", id));
         }
-        return noteService.findById(id);
+        return note;
 
     }
 
