@@ -74,10 +74,10 @@ public class NoteService implements CrudService<NoteDTO> {
         return note.filter(value -> user.equals(value.getUser())).isPresent();
     }
 
-    public boolean isNotePresentForTheUser(UUID id, User user) {
+    public boolean isNotePresentForTheUser(UUID id, String userName) {
         log.info("isNotePresentForTheUser .");
         Optional<Note> note = noteRepository.findById(id);
-        return note.filter(value -> user.equals(value.getUser())).isPresent();
+        return note.filter(value -> userName.equals(value.getUser().getName())).isPresent();
     }
 
     public List<NoteDTO> findByUserName(String userName) {

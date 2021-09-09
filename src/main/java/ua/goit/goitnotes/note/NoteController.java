@@ -52,7 +52,7 @@ public class NoteController {
     }
 
     @GetMapping(path = "/search")
-    public String showSearchForm(@RequestParam (name = "contains") String contains, Model model) {
+    public String showSearchForm(@RequestParam(name = "contains") String contains, Model model) {
         log.info("NoteController.showSearchForm()");
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
         List<NoteDTO> notes = noteService.findByUserNameAndContentLike(userService.findByName(currentPrincipalName).getId(), contains);
@@ -114,8 +114,8 @@ public class NoteController {
     @GetMapping
     @ResponseBody
     public NoteDTO noteToClient(@RequestParam(name = "id") UUID id) {
-        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (!noteService.isNotePresentForTheUser(id, currentUser)) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!noteService.isNotePresentForTheUser(id, currentUserName)) {
             throw new ObjectNotFoundException(String.format("note %s does not exist", id));
         }
         return noteService.findById(id);
@@ -130,13 +130,12 @@ public class NoteController {
     @GetMapping("/formatted")
     @ResponseBody
     public FormattedNote formattedNote(@RequestParam(name = "id") UUID id) {
-        User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         FormattedNote formattedNote = new FormattedNote();
         try {
             NoteDTO note = noteService.findById(id);
             if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
-                    (Objects.nonNull(currentUser.getName()) &&
-                            noteService.isNotePresentForTheUser(id, currentUser))) {
+                    (note.getUserName().equals(currentUserName))) {
                 formattedNote.setTitle(note.getTitle());
                 formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
                 return formattedNote;
