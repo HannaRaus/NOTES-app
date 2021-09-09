@@ -58,7 +58,12 @@ public class NoteController {
     @GetMapping(path = "/delete")
     public String delete(@RequestParam(name = "id") UUID uuid) {
         log.info("NoteController.delete().");
-        noteService.delete(uuid);
+        NoteDTO note = noteService.findById(uuid);
+        if (note.getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            noteService.delete(uuid);
+        } else {
+            return "redirect:/error";
+        }
         return "redirect:/note/list";
     }
 
