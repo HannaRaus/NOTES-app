@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--Import head with styles and script-->
+<head th:include="fragments :: head">
+    <title id="pageTitle">Update note</title>
+</head>
+<body onload="getNote();">
+<!--Import navigation bar-->
+<div th:replace="fragments :: navibar"></div>
+<div class="container">
+    <input id="uuid" name="uuid" type="hidden">
+    <!--Title-->
+    <p class="titleErrorField" style="color:red"></p>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Title</span>
+        </div>
+        <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"
+               id="title" name="title" type="text" minlength="5" maxlength="100" placeholder="Your title here">
+    </div>
+
+    <!--Content-->
+    <p class="contentErrorField" style="color:red"></p>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Note</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea" placeholder="Write your note here"
+                  id="note" name="note" cols="150" rows="20" minlength="5" maxlength="10000"></textarea>
+    </div>
+
+    <!--Access-->
+    <p class="accessTypeErrorField" style="color:red"></p>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="radio" id="private" name="accessType" value="private" checked>
+            </div>
+        </div>
+        <label class="form-control" for="private">private</label>
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="radio" id="public" name="accessType" value="public">
+            </div>
+        </div>
+        <label class="form-control" for="public">public</label>
+    </div>
+    <button class="btn btn-outline-success btn-block" type="button" onclick="sendNoteToEdit()">Update</button>
+</div>
+</body>
+<script src="/js/getNoteById.js"></script>
+<script src="/js/sendNoteToEdit.js"></script>
+<!--Script that makes all inputs the same width-->
+<script src="/js/style.js"></script>
+</html>

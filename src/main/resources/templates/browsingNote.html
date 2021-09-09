@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--Import head with styles and script-->
+<head th:include="fragments :: head">
+    <title id="pageTitle">My notes</title>
+</head>
+<body onload="getFormattedNote();">
+<!--Import navigation bar-->
+<div th:replace="fragments :: navibar"></div>
+<div class="container">
+    <div class="card border-secondary mb-3" style="max-width: 100%; margin-top: 10%">
+        <div class="card-header">
+            <H2 class="NoteTitlePlace"></H2>
+        </div>
+        <div class="card-body">
+            <p class="NotePlace"></p>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/getFormattedNote.js"></script>
+</html>

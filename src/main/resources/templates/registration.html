@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="login-register-form">
+        <h2 class="form-signin-heading">Create your account</h2>
+
+
+        <div class="form-group">
+            <label for="username" class="form-label mt-4">Username</label>
+            <input type="text" name="username" class="form-control" id="username"
+                   placeholder="Enter username contains only latin symbols">
+        </div>
+        <span class="usernameErrorField" style="color:red"></span>
+
+        <div class="form-group">
+            <label for="password" class="form-label mt-4">Password</label>
+            <input type="text" name="password" class="form-control" id="password"
+                   placeholder="Enter password">
+        </div>
+        <span class="passwordErrorField" style="color:red"></span>
+
+        <div cass="form-group">
+            <div class="form-label mt-4">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-lg btn-primary" onclick="sendToValidateAndCreateUser()">SIGN UP</button>
+                </div>
+            </div>
+        </div>
+        <h5 class="text-center"><a href="/login">Return to Login page</a>
+        </h5>
+    </div>
+</div>
+</body>
+<script src="/js/sendToValidateUser.js"></script>
+</html>
