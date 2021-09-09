@@ -75,6 +75,7 @@ public class NoteController {
     @PostMapping("/create")
     @ResponseBody
     public ValidateResponse createNoteOrShowException(@RequestBody ValidateNoteRequest noteRequest) {
+        log.info("NoteController.createNoteOrShowException()");
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         ValidateResponse response = validationService.validateNote(noteRequest, currentUser);
         if (response.isSuccess()) {
@@ -96,6 +97,7 @@ public class NoteController {
     @PostMapping("/edit")
     @ResponseBody
     public ValidateResponse updateNoteOrShowException(@RequestBody ValidateNoteRequest noteRequest) {
+        log.info("NoteController.updateNoteOrShowException()");
         User currentUser = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         ValidateResponse response = validationService.validateNote(noteRequest, currentUser);
         if (response.isSuccess()) {
@@ -113,8 +115,10 @@ public class NoteController {
     @GetMapping
     @ResponseBody
     public NoteDTO noteToClient(@RequestParam(name = "id") UUID id) {
+        log.info("NoteController.noteToClient()");
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         NoteDTO note = noteService.findById(id);
-        if (!note.getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+        if (!noteService.isNotePresentForTheUser(note, currentUserName)) {
             throw new ObjectNotFoundException(String.format("note %s does not exist", id));
         }
         return note;
@@ -129,14 +133,15 @@ public class NoteController {
     @GetMapping("/formatted")
     @ResponseBody
     public FormattedNote formattedNote(@RequestParam(name = "id") UUID id) {
+        log.info("NoteController.formattedNote()");
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         FormattedNote formattedNote = new FormattedNote();
         try {
             NoteDTO note = noteService.findById(id);
             if (note.getAccessType().equals(AccessType.PUBLIC.toString()) ||
-                    note.getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+                    (note.getUserName().equals(currentUserName))) {
                 formattedNote.setTitle(note.getTitle());
                 formattedNote.setContent(markdownProcessor.getHtml(note.getContent()));
-                return formattedNote;
             }
         } catch (RuntimeException ex) {
             return formattedNote;
